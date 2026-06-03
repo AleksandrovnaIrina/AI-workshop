@@ -363,14 +363,45 @@
       background: var(--black2);
       padding: 36px;
       border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px;
+      align-items: start;
     }
+    .speaker-photo {
+      width: 180px;
+      height: 220px;
+      border-radius: 10px;
+      object-fit: cover;
+      object-position: top;
+      border: 2px solid rgba(198,255,0,.25);
+      display: block;
+    }
+    .speaker-photo-placeholder {
+      width: 180px; height: 220px;
+      border-radius: 10px;
+      background: var(--black3);
+      border: 2px dashed rgba(198,255,0,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      flex-shrink: 0;
+    }
+    .speaker-info {}
     .speaker-name {
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 700;
       margin-bottom: 4px;
     }
-    .speaker-role { color: var(--lime); font-size: .9rem; font-weight: 600; margin-bottom: 20px; }
-    .speaker-bio { color: var(--gray); line-height: 1.8; }
+    .speaker-role {
+      color: var(--lime);
+      font-size: .82rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .speaker-bio { color: var(--gray); line-height: 1.75; font-size: .95rem; }
+    .speaker-bio li { list-style: none; padding: 3px 0; }
+    .speaker-bio li::before { content: '→ '; color: var(--lime); }
     .speaker-bottom { padding: 28px 36px; }
     .agents-label {
       font-family: 'Space Mono', monospace;
@@ -394,6 +425,39 @@
     .agent b { margin-right: 6px; }
     .agent span { color: var(--gray); font-size: .9rem; }
     .speaker-tg a { color: var(--lime); text-decoration: none; font-weight: 700; }
+
+    /* ── REVIEWS ── */
+    .reviews-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+    .review-card {
+      background: var(--black2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color .15s;
+    }
+    .review-card:hover { border-color: rgba(198,255,0,.25); }
+    .review-stars { color: var(--lime); font-size: 1rem; margin-bottom: 12px; letter-spacing: 2px; }
+    .review-text { color: var(--gray); font-size: .93rem; line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+    .review-author { font-weight: 700; font-size: .88rem; }
+    .review-role { color: var(--gray); font-size: .8rem; margin-top: 2px; }
+
+    /* ── QUESTION ── */
+    .question-bar {
+      background: var(--lime-dim);
+      border-top: 1px solid rgba(198,255,0,.2);
+      border-bottom: 1px solid rgba(198,255,0,.2);
+      padding: 28px 0;
+      text-align: center;
+    }
+    .question-bar p { color: var(--white); font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+    .question-bar a {
+      color: var(--lime);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .question-bar a:hover { text-decoration: underline; }
 
     /* ── PRICE ── */
     .price-card {
@@ -493,12 +557,28 @@
     }
     .footer-logo span { color: var(--lime); }
 
-    @media (max-width: 600px) {
-      .stats { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 2.2rem; }
-      .price-num { font-size: 3rem; }
+    @media (max-width: 640px) {
+      section { padding: 56px 0; }
+      .hero { padding: 64px 0 56px; }
+      .hero h1 { font-size: 2.2rem; letter-spacing: -.01em; }
+      .hero-sub { font-size: 1rem; }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stats .stat:last-child { grid-column: 1 / -1; }
       .prog-body { padding-left: 24px; }
-      .speaker-top, .speaker-bottom, .price-body { padding: 24px; }
+      .speaker-top {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+      .speaker-photo, .speaker-photo-placeholder { width: 100%; height: 240px; }
+      .speaker-bottom { padding: 20px 24px; }
+      .price-body { padding: 24px; }
+      .price-top { padding: 24px; }
+      .price-num { font-size: 3rem; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      h2 { font-size: 1.6rem; }
+      .final h2 { font-size: 1.8rem; }
+      .prog-badge { display: none; }
     }
   </style>
 </head>
@@ -704,23 +784,70 @@
 <section>
   <div class="container">
     <div class="label">Хто веде</div>
-    <h2>HR яка будує AI-агентів</h2>
+    <h2>Ірина Субботіна</h2>
     <div class="speaker-card">
       <div class="speaker-top">
-        <div class="speaker-name">Ірина</div>
-        <div class="speaker-role">Head of HR · 7 років в рекрутингу та HR</div>
-        <p class="speaker-bio">
-          Я не теоретик. Я побудувала своїх агентів без технічної освіти — через VS Code і Claude Code. Вони реально працюють щодня. Тепер покажу як це зробити тобі.
-        </p>
+        <img src="irina.png" alt="Ірина Субботіна" class="speaker-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="speaker-photo-placeholder" style="display:none;">👩‍💼</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Ірина Субботіна</div>
+          <div class="speaker-role">
+            Head of HR at Rockit Media · Co-owner Rockit Talent · Owner Rockit Academy
+          </div>
+          <ul class="speaker-bio">
+            <li>10+ років в IT та digital-середовищі</li>
+            <li>7+ років у HR, рекрутингу та people management</li>
+            <li>Побудувала HR-процеси для IT, affiliate marketing та media buying команд</li>
+            <li>Співвласниця рекрутингової агенції Rockit Talent</li>
+            <li>Авторка навчальних програм з рекрутингу, сорсингу, AI та HR</li>
+            <li>Навчила 200+ сорсерів і рекрутерів використовувати AI</li>
+            <li>Тестує нові AI-інструменти першою 🚀</li>
+          </ul>
+        </div>
       </div>
       <div class="speaker-bottom">
-        <div class="agents-label">// Мої агенти що вже працюють</div>
+        <div class="agents-label">// Мої агенти що вже працюють щодня</div>
         <div class="agents">
           <div class="agent"><span class="agent-ico">🤖</span><span><b>Люмус</b><span>— мій особистий HR-асистент в Telegram</span></span></div>
           <div class="agent"><span class="agent-ico">👁</span><span><b>Аргус</b><span>— слідкує за конкурентами і транскрибує їх контент</span></span></div>
           <div class="agent"><span class="agent-ico">🌟</span><span><b>Сіріус</b><span>— персональний асистент з розширеною пам'яттю</span></span></div>
         </div>
         <p class="speaker-tg">Telegram: <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section>
+  <div class="container">
+    <div class="label">Відгуки</div>
+    <h2>Що кажуть учасники</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Прийшла зі скепсисом — думала, що це знову теорія. Вийшла з власним агентом який вже сьогодні зранку обробив мій inbox. Магія."</p>
+        <div class="review-author">Олена К.</div>
+        <div class="review-role">HR Business Partner, IT-компанія</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"За 5 годин зробила те, що відкладала пів року. Агент реально працює — шукає кандидатів поки я на зустрічах."</p>
+        <div class="review-author">Марина Д.</div>
+        <div class="review-role">Senior Recruiter</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ірина пояснює так, що навіть я — людина без технічного бекграунду — все зрозуміла і зробила сама. Крутий формат."</p>
+        <div class="review-author">Анна В.</div>
+        <div class="review-role">Head of Talent Acquisition</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Найкращі 5 годин, вкладені в навчання за останній рік. ROI відчула вже в перший тиждень — агент економить 2+ години щодня."</p>
+        <div class="review-author">Тетяна М.</div>
+        <div class="review-role">HR Generalist</div>
       </div>
     </div>
   </div>
@@ -811,10 +938,15 @@
   </div>
 </section>
 
+<div class="question-bar">
+  <p>Залишились питання щодо воркшопу?</p>
+  <a href="https://t.me/IrynaS_HR" target="_blank">Напиши мені в Telegram → @IrynaS_HR</a>
+</div>
+
 <footer>
   <div class="footer-inner">
     <span class="footer-logo">AI<span>_agent</span></span>
-    <span>© 2025 Ірина · <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a> · <a href="oferta.html">Договір оферти</a></span>
+    <span>© 2025 Ірина Субботіна · <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a> · <a href="oferta.html">Договір оферти</a></span>
   </div>
 </footer>
 
