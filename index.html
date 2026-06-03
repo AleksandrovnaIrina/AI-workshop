@@ -5,421 +5,560 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Від нуля до AI-агента — воркшоп для HR</title>
   <meta name="description" content="Живий воркшоп для HR та рекрутерів. Побудуй власного Telegram-агента з нуля — без досвіду в коді." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0a0a0f;
-      --surface: #13131f;
-      --surface2: #1c1c2e;
-      --accent: #7c3aed;
-      --accent2: #a78bfa;
-      --green: #10b981;
-      --text: #f1f0ff;
-      --muted: #8b8ba7;
-      --border: #2a2a40;
+      --black: #0d0d0d;
+      --white: #ffffff;
+      --orange: #ff5c00;
+      --orange-light: #ff7a2b;
+      --yellow: #ffe600;
+      --gray: #f4f4f4;
+      --gray2: #e8e8e8;
+      --text: #0d0d0d;
+      --muted: #6b6b6b;
+      --border: #e0e0e0;
     }
 
     body {
-      background: var(--bg);
+      background: var(--white);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      line-height: 1.7;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.65;
     }
 
-    a { color: var(--accent2); text-decoration: none; }
+    h1, h2, h3, .display {
+      font-family: 'Unbounded', sans-serif;
+      line-height: 1.15;
+    }
 
-    /* ── UTILS ── */
-    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-    .tag {
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    section { padding: 72px 0; border-bottom: 2px solid var(--black); }
+
+    /* ── LABEL ── */
+    .label {
       display: inline-block;
-      background: rgba(124,58,237,.18);
-      color: var(--accent2);
-      border: 1px solid rgba(124,58,237,.35);
-      border-radius: 20px;
-      padding: 4px 14px;
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .06em;
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Unbounded', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 24px;
     }
-    h2 { font-size: 2rem; font-weight: 800; line-height: 1.25; margin-bottom: 16px; }
-    .section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      font-family: 'Unbounded', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: transform .12s, box-shadow .12s;
+      letter-spacing: .02em;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.15); }
+    .btn-orange { background: var(--orange); color: var(--white); }
+    .btn-orange:hover { box-shadow: 0 6px 24px rgba(255,92,0,.35); }
+    .btn-black { background: var(--black); color: var(--white); }
+    .btn-outline { background: transparent; color: var(--black); border: 2px solid var(--black); }
+
+    /* ── NAV ── */
+    nav {
+      border-bottom: 2px solid var(--black);
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 100;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+    .nav-logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .95rem;
+      font-weight: 900;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--orange); }
 
     /* ── HERO ── */
     .hero {
-      padding: 100px 0 80px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      padding: 80px 0 72px;
+      border-bottom: 2px solid var(--black);
+      background: var(--black);
+      color: var(--white);
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(124,58,237,.25) 0%, transparent 70%);
-      pointer-events: none;
+    .hero-badge {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Unbounded', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: 6px 16px;
+      border-radius: 2px;
+      margin-bottom: 28px;
     }
     .hero h1 {
-      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      font-size: clamp(2.4rem, 6vw, 4rem);
       font-weight: 900;
-      line-height: 1.15;
       margin-bottom: 24px;
+      color: var(--white);
     }
-    .hero h1 span { color: var(--accent2); }
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--muted);
-      max-width: 520px;
-      margin: 0 auto 36px;
+    .hero h1 em {
+      font-style: normal;
+      color: var(--yellow);
     }
-    .early-bird {
-      font-size: .9rem;
-      color: var(--muted);
-      margin-top: 14px;
-    }
-    .early-bird strong { color: #f59e0b; }
-
-    /* ── BUTTON ── */
-    .btn {
-      display: inline-block;
-      padding: 16px 36px;
-      border-radius: 12px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: transform .15s, box-shadow .15s;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,.4); }
-    .btn-primary {
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
-      color: #fff;
-    }
-    .btn-pay {
-      background: linear-gradient(135deg, #059669, #10b981);
-      color: #fff;
+    .hero-sub {
       font-size: 1.1rem;
-      padding: 18px 44px;
+      color: rgba(255,255,255,.65);
+      max-width: 560px;
+      margin-bottom: 40px;
+      line-height: 1.7;
     }
-    .btn-tg {
-      background: linear-gradient(135deg, #0088cc, #29b6f6);
-      color: #fff;
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
+    .hero-note {
+      color: rgba(255,255,255,.5);
+      font-size: .85rem;
+    }
+    .hero-note strong { color: var(--yellow); }
 
     /* ── PAIN ── */
-    .pain-list { list-style: none; margin: 24px 0; }
-    .pain-list li {
-      padding: 14px 18px;
-      background: var(--surface);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 10px;
+    .pain-items { display: grid; gap: 2px; margin-top: 32px; }
+    .pain-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
       font-size: 1.05rem;
     }
-    .note {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+    .pain-item:last-child { border-bottom: none; }
+    .pain-arrow {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1rem;
+      color: var(--orange);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .pain-note {
+      margin-top: 36px;
+      background: var(--yellow);
+      border-left: 4px solid var(--orange);
       padding: 18px 22px;
-      color: var(--muted);
-      font-style: italic;
+      font-weight: 600;
+      font-size: 1rem;
     }
 
     /* ── SOLUTION ── */
-    .solution-grid { display: grid; gap: 12px; margin-top: 28px; }
+    .solution-items { display: grid; gap: 12px; margin-top: 32px; }
     .solution-item {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       align-items: flex-start;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
+      padding: 18px 20px;
+      border: 2px solid var(--black);
+      border-radius: 4px;
     }
-    .solution-item .ico { font-size: 1.4rem; flex-shrink: 0; }
-
-    /* ── WHAT WE BUILD ── */
-    .features { display: grid; gap: 12px; margin: 28px 0; }
-    .feature {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      padding: 14px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-    .feature .ico { font-size: 1.4rem; }
-    .stack-badge {
-      display: inline-flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-    .stack-badge span {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-size: .85rem;
-      font-weight: 600;
-      color: var(--accent2);
-    }
-    .warning {
-      margin-top: 24px;
-      padding: 16px 20px;
-      border: 1px solid rgba(245,158,11,.3);
-      background: rgba(245,158,11,.06);
-      border-radius: 12px;
-      color: #f59e0b;
-      font-weight: 600;
+    .solution-ico { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+    .solution-punchline {
+      margin-top: 36px;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-top: 2px solid var(--black);
+      padding-top: 24px;
     }
 
-    /* ── PROGRAM ── */
-    .timeline { margin-top: 32px; display: grid; gap: 2px; }
-    .block {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .block-header {
+    /* ── BUILD ── */
+    .build-features { display: grid; gap: 0; margin-top: 32px; border: 2px solid var(--black); border-radius: 4px; overflow: hidden; }
+    .build-feature {
       display: flex;
+      gap: 16px;
       align-items: center;
-      gap: 14px;
       padding: 18px 22px;
-      cursor: pointer;
-      user-select: none;
+      border-bottom: 1px solid var(--border);
     }
-    .block-num {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #a855f7);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: .85rem; flex-shrink: 0;
-    }
-    .block-title { font-weight: 700; font-size: 1.05rem; }
-    .block-star { color: #f59e0b; margin-left: auto; }
-    .block-body {
-      padding: 0 22px 18px 72px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-    .block-body li { list-style: none; padding: 2px 0; }
-    .block-body li::before { content: '→ '; color: var(--accent2); }
-
-    /* ── FOR WHOM ── */
-    .yes-list, .no-list { list-style: none; margin: 20px 0 12px; display: grid; gap: 10px; }
-    .yes-list li {
-      padding: 12px 18px;
-      background: rgba(16,185,129,.08);
-      border: 1px solid rgba(16,185,129,.25);
-      border-radius: 10px;
-    }
-    .yes-list li::before { content: '✅ '; }
-    .no-list li {
-      padding: 12px 18px;
-      background: rgba(239,68,68,.07);
-      border: 1px solid rgba(239,68,68,.2);
-      border-radius: 10px;
-      color: var(--muted);
-    }
-    .no-list li::before { content: '❌ '; }
-
-    /* ── SPEAKER ── */
-    .speaker-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
+    .build-feature:last-child { border-bottom: none; }
+    .build-feature .ico { font-size: 1.25rem; flex-shrink: 0; }
+    .stack-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-top: 28px;
     }
-    .speaker-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
-    .speaker-role { color: var(--accent2); font-weight: 600; margin-bottom: 20px; }
-    .agents { display: grid; gap: 10px; margin: 20px 0; }
-    .agent {
-      display: flex; gap: 12px; align-items: center;
-      padding: 12px 16px;
-      background: var(--surface2);
-      border-radius: 10px;
-      border: 1px solid var(--border);
+    .stack-tag {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border: 2px solid var(--black);
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
     }
-    .agent .ico { font-size: 1.3rem; }
+    .build-warn {
+      margin-top: 24px;
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 22px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: .95rem;
+    }
+    .build-warn span { color: var(--yellow); }
+
+    /* ── PROGRAM ── */
+    .program-grid { display: grid; gap: 2px; margin-top: 32px; }
+    .prog-block {
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .prog-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: var(--white);
+    }
+    .prog-header.star { background: var(--black); color: var(--white); }
+    .prog-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--orange);
+      min-width: 44px;
+      line-height: 1;
+    }
+    .prog-header.star .prog-num { color: var(--yellow); }
+    .prog-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+    }
+    .prog-badge {
+      margin-left: auto;
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Unbounded', sans-serif;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .prog-body {
+      padding: 0 24px 20px 84px;
+      color: var(--muted);
+      line-height: 1.8;
+      border-top: 1px solid var(--border);
+    }
+    .prog-header.star + .prog-body { border-top: 1px solid rgba(255,255,255,.15); background: #111; color: rgba(255,255,255,.65); }
+    .prog-body ul { list-style: none; padding-top: 16px; }
+    .prog-body li::before { content: '→ '; color: var(--orange); font-weight: 700; }
+
+    /* ── FOR WHOM ── */
+    .whom-yes { display: grid; gap: 8px; margin: 24px 0 16px; }
+    .whom-no  { display: grid; gap: 8px; }
+    .whom-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: .98rem;
+    }
+    .whom-item.yes { border-color: #c3f0d8; background: #f0fff7; }
+    .whom-item.no  { border-color: #f5d0d0; background: #fff5f5; color: var(--muted); }
+
+    /* ── SPEAKER ── */
+    .speaker-wrap {
+      margin-top: 32px;
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .speaker-top {
+      background: var(--black);
+      color: var(--white);
+      padding: 32px;
+    }
+    .speaker-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+    .speaker-role { color: var(--yellow); font-weight: 600; font-size: .9rem; margin-bottom: 20px; }
+    .speaker-bio { color: rgba(255,255,255,.7); line-height: 1.75; }
+    .speaker-bottom { padding: 28px 32px; }
+    .agents-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .agents { display: grid; gap: 8px; }
+    .agent-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .agent-ico { font-size: 1.2rem; }
+    .agent-name { font-weight: 700; margin-right: 6px; }
+    .agent-desc { color: var(--muted); font-size: .9rem; }
+    .speaker-tg { margin-top: 20px; font-weight: 600; }
+    .speaker-tg a { color: var(--orange); text-decoration: none; }
 
     /* ── PRICE ── */
     .price-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
       margin-top: 32px;
-      text-align: center;
-    }
-    .price-main {
-      font-size: 3.2rem;
-      font-weight: 900;
-      color: var(--accent2);
-      line-height: 1;
-      margin: 12px 0 4px;
-    }
-    .price-old {
-      text-decoration: line-through;
-      color: var(--muted);
-      font-size: 1.2rem;
-    }
-    .price-label { color: #f59e0b; font-weight: 700; font-size: .95rem; margin-bottom: 24px; }
-    .includes { text-align: left; margin: 28px 0; display: grid; gap: 10px; }
-    .includes li {
-      list-style: none;
-      display: flex; gap: 10px; align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .includes li:last-child { border-bottom: none; }
-    .includes li::before { content: '✓'; color: var(--green); font-weight: 800; font-size: 1.1rem; }
-    .price-note { color: var(--muted); font-size: .9rem; margin-top: 14px; }
-
-    /* ── WayForPay ── */
-    #wfp-btn-wrapper { margin: 24px 0 8px; }
-
-    /* ── FAQ ── */
-    .faq { display: grid; gap: 12px; margin-top: 28px; }
-    .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      border: 2px solid var(--black);
+      border-radius: 4px;
       overflow: hidden;
     }
+    .price-top {
+      background: var(--orange);
+      color: var(--white);
+      padding: 32px;
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .price-main {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .price-meta { padding-bottom: 4px; }
+    .price-old { text-decoration: line-through; opacity: .7; font-size: 1rem; margin-bottom: 2px; }
+    .price-tag { background: var(--yellow); color: var(--black); font-family: 'Unbounded', sans-serif; font-size: .7rem; font-weight: 700; padding: 4px 10px; border-radius: 2px; display: inline-block; }
+    .price-body { padding: 32px; }
+    .includes { display: grid; gap: 0; }
+    .include-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .98rem;
+    }
+    .include-item:last-child { border-bottom: none; }
+    .include-check { color: var(--orange); font-size: 1.1rem; font-weight: 800; flex-shrink: 0; }
+    .price-cta-row { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; text-align: center; }
+    .price-or { color: var(--muted); font-size: .85rem; }
+    .price-hint { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+
+    /* ── WayForPay ── */
+    #wfp-wrapper { width: 100%; }
+    #wfp-wrapper .btn { width: 100%; text-align: center; font-size: .95rem; padding: 18px; }
+
+    /* ── FAQ ── */
+    .faq { display: grid; gap: 0; margin-top: 32px; border: 2px solid var(--black); border-radius: 4px; overflow: hidden; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
     .faq-q {
-      padding: 18px 22px;
-      font-weight: 700;
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 20px 24px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
+      color: var(--text);
     }
-    .faq-q::after { content: '+'; font-size: 1.4rem; color: var(--accent2); flex-shrink: 0; margin-left: 12px; }
-    .faq-q.open::after { content: '−'; }
-    .faq-a {
-      display: none;
-      padding: 0 22px 18px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
+    .faq-icon { font-size: 1.3rem; color: var(--orange); flex-shrink: 0; transition: transform .2s; }
+    .faq-q.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 24px 20px; color: var(--muted); line-height: 1.75; }
     .faq-a.open { display: block; }
 
     /* ── FINAL CTA ── */
-    .final-cta {
-      padding: 100px 0;
+    .final {
+      background: var(--black);
+      color: var(--white);
       text-align: center;
+      border-bottom: none;
     }
-    .final-cta h2 { font-size: 2.4rem; margin-bottom: 16px; }
-    .final-cta p { color: var(--muted); font-size: 1.1rem; margin-bottom: 36px; }
+    .final h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--white); margin-bottom: 16px; }
+    .final p { color: rgba(255,255,255,.55); font-size: 1.05rem; margin-bottom: 36px; }
+    .final .btn-orange:hover { box-shadow: 0 8px 30px rgba(255,92,0,.5); }
+    .final-hint { color: rgba(255,255,255,.4); font-size: .85rem; margin-top: 16px; }
 
     /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 30px 0;
-      text-align: center;
-      color: var(--muted);
+    footer { padding: 24px 0; border-top: 2px solid var(--black); }
+    .footer-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: .85rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 8px;
     }
+    footer a { color: var(--orange); text-decoration: none; }
 
     @media (max-width: 600px) {
-      h2 { font-size: 1.6rem; }
-      .price-card { padding: 28px 20px; }
-      .speaker-card { padding: 22px; }
+      .hero h1 { font-size: 2rem; }
+      .price-main { font-size: 2.6rem; }
+      .prog-body { padding-left: 24px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════ HERO ══════════════ -->
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">AI<span>агент</span></a>
+    <a href="https://t.me/IrynaS_HR" class="btn btn-orange" target="_blank" style="padding:10px 22px;font-size:.78rem;">Зареєструватись</a>
+  </div>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
   <div class="container">
-    <span class="tag">Живий воркшоп · Zoom · 5 годин</span>
-    <h1>Від нуля до <span>AI-агента</span><br>який працює за тебе 24/7</h1>
-    <p>Для HR та рекрутерів — будуєш власного Telegram-агента з нуля, без досвіду в коді, без шаблонів, без обмежень</p>
-    <a href="https://t.me/IrynaS_HR" class="btn btn-tg" target="_blank">Зареєструватись → @IrynaS_HR</a>
-    <div class="early-bird">
-      🔥 <strong>Early bird — 79 €</strong> замість 99 € &nbsp;·&nbsp; Кількість місць обмежена
+    <div class="hero-badge">Живий воркшоп · Zoom · 5 годин</div>
+    <h1>Від нуля<br>до <em>AI-агента</em><br>який не спить</h1>
+    <p class="hero-sub">
+      Для HR та рекрутерів — будуєш власного Telegram-агента з нуля,<br>
+      без досвіду в коді, без шаблонів, без обмежень
+    </p>
+    <div class="hero-cta-row">
+      <a href="https://t.me/IrynaS_HR" class="btn btn-orange" target="_blank">Зареєструватись → @IrynaS_HR</a>
+      <span class="hero-note">🔥 <strong>Early bird — 79 €</strong> замість 99 €<br>Місць обмаль</span>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ PAIN ══════════════ -->
-<section class="section">
+<!-- PAIN -->
+<section>
   <div class="container">
-    <span class="tag">Впізнаєш себе?</span>
-    <h2>Схоже на твій день?</h2>
-    <ul class="pain-list">
-      <li>Скринінг CV займає години — і це щодня</li>
-      <li>Кандидати губляться між таблицями і листами</li>
-      <li>Ти вже чула про AI але не знаєш з чого почати</li>
-      <li>Пробувала Zapier чи Make/n8n — але це не те</li>
-      <li>Здається що автоматизація — це "для технарів"</li>
-    </ul>
-    <p class="note">Це не твоя вина. Просто ніхто не показав як це робиться для HR.</p>
+    <div class="label">Впізнаєш себе?</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:8px">Схоже на твій день?</h2>
+    <p style="color:var(--muted);font-size:1rem">Якщо хоч один пункт — твій, читай далі.</p>
+    <div class="pain-items">
+      <div class="pain-item"><span class="pain-arrow">→</span><span>Скринінг CV займає години — і це щодня</span></div>
+      <div class="pain-item"><span class="pain-arrow">→</span><span>Кандидати губляться між таблицями і листами</span></div>
+      <div class="pain-item"><span class="pain-arrow">→</span><span>Ти вже чула про AI але не знаєш з чого почати</span></div>
+      <div class="pain-item"><span class="pain-arrow">→</span><span>Пробувала Zapier чи Make/n8n — але це не те</span></div>
+      <div class="pain-item"><span class="pain-arrow">→</span><span>Здається що автоматизація — це "для технарів"</span></div>
+    </div>
+    <div class="pain-note">Це не твоя вина. Просто ніхто не показав як це робиться для HR.</div>
   </div>
 </section>
 
-<!-- ══════════════ SOLUTION ══════════════ -->
-<section class="section">
+<!-- SOLUTION -->
+<section>
   <div class="container">
-    <span class="tag">Рішення</span>
-    <h2>Що якщо твій асистент ніколи не спить?</h2>
+    <div class="label">Рішення</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:8px">Що якщо твій асистент ніколи не спить?</h2>
     <p style="color:var(--muted)">Уяви агента який:</p>
-    <div class="solution-grid">
-      <div class="solution-item"><span class="ico">🔍</span><span>Шукає кандидатів поки ти на зустрічі</span></div>
-      <div class="solution-item"><span class="ico">📩</span><span>Читає пошту і дає дайджест за хвилину</span></div>
-      <div class="solution-item"><span class="ico">🧠</span><span>Пам'ятає кожного кандидата і кожну вакансію</span></div>
-      <div class="solution-item"><span class="ico">💬</span><span>Надсилає повідомлення від твого імені в Telegram</span></div>
-      <div class="solution-item"><span class="ico">📅</span><span>Перевіряє твій календар і пропонує слоти для інтерв'ю</span></div>
-      <div class="solution-item"><span class="ico">🌙</span><span>Відповідає на запити о 23:00 так само як о 9:00</span></div>
+    <div class="solution-items">
+      <div class="solution-item"><span class="solution-ico">🔍</span><span>Шукає кандидатів поки ти на зустрічі</span></div>
+      <div class="solution-item"><span class="solution-ico">📩</span><span>Читає пошту і дає дайджест за хвилину</span></div>
+      <div class="solution-item"><span class="solution-ico">🧠</span><span>Пам'ятає кожного кандидата і кожну вакансію</span></div>
+      <div class="solution-item"><span class="solution-ico">💬</span><span>Надсилає повідомлення від твого імені в Telegram</span></div>
+      <div class="solution-item"><span class="solution-ico">📅</span><span>Перевіряє твій календар і пропонує слоти для інтерв'ю</span></div>
+      <div class="solution-item"><span class="solution-ico">🌙</span><span>Відповідає на запити о 23:00 так само як о 9:00</span></div>
     </div>
-    <p style="margin-top:28px;font-weight:700;font-size:1.1rem;">Це не фантастика. Це те що ти побудуєш на воркшопі.</p>
+    <p class="solution-punchline">Це не фантастика.<br>Це те що ти побудуєш на воркшопі.</p>
   </div>
 </section>
 
-<!-- ══════════════ WHAT WE BUILD ══════════════ -->
-<section class="section">
+<!-- WHAT WE BUILD -->
+<section>
   <div class="container">
-    <span class="tag">Що будуємо</span>
-    <h2>Твій агент. Не шаблон — твій.</h2>
+    <div class="label">Що будуємо</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:8px">Твій агент.<br>Не шаблон — твій.</h2>
     <p style="color:var(--muted);margin-bottom:8px">На воркшопі ти побудуєш повноцінного AI-агента в Telegram який вміє:</p>
-    <div class="features">
-      <div class="feature"><span class="ico">🔍</span><span>Шукати кандидатів в інтернеті за твоїм запитом</span></div>
-      <div class="feature"><span class="ico">📋</span><span>Зберігати кандидатів і вакансії в Google Sheets</span></div>
-      <div class="feature"><span class="ico">📅</span><span>Перевіряти твій Google Calendar і пропонувати слоти</span></div>
-      <div class="feature"><span class="ico">📩</span><span>Читати важливі листи з Gmail і давати короткий дайджест</span></div>
-      <div class="feature"><span class="ico">💬</span><span>Надсилати повідомлення з твого особистого Telegram</span></div>
-      <div class="feature"><span class="ico">🧠</span><span>Пам'ятати все що ти йому говориш</span></div>
-      <div class="feature"><span class="ico">🎤</span><span>Розуміти голосові повідомлення</span></div>
+    <div class="build-features">
+      <div class="build-feature"><span class="ico">🔍</span><span>Шукати кандидатів в інтернеті за твоїм запитом</span></div>
+      <div class="build-feature"><span class="ico">📋</span><span>Зберігати кандидатів і вакансії в Google Sheets</span></div>
+      <div class="build-feature"><span class="ico">📅</span><span>Перевіряти твій Google Calendar і пропонувати слоти</span></div>
+      <div class="build-feature"><span class="ico">📩</span><span>Читати важливі листи з Gmail і давати короткий дайджест</span></div>
+      <div class="build-feature"><span class="ico">💬</span><span>Надсилати повідомлення з твого особистого Telegram</span></div>
+      <div class="build-feature"><span class="ico">🧠</span><span>Пам'ятати все що ти йому говориш</span></div>
+      <div class="build-feature"><span class="ico">🎤</span><span>Розуміти голосові повідомлення</span></div>
     </div>
-    <div class="stack-badge">
-      <span>Claude AI</span><span>VS Code</span><span>Docker</span><span>Telegram</span><span>Google APIs</span>
+    <div class="stack-row">
+      <span class="stack-tag">Claude AI</span>
+      <span class="stack-tag">VS Code</span>
+      <span class="stack-tag">Docker</span>
+      <span class="stack-tag">Telegram</span>
+      <span class="stack-tag">Google APIs</span>
     </div>
-    <div class="warning">
+    <div class="build-warn">
       ⚠️ Ти не будеш копіювати чужого агента.<br>
-      Ти побудуєш свого — з власним характером, ім'ям і задачами.
+      <span>Ти побудуєш свого — з власним характером, ім'ям і задачами.</span>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ PROGRAM ══════════════ -->
-<section class="section">
+<!-- PROGRAM -->
+<section>
   <div class="container">
-    <span class="tag">Програма</span>
-    <h2>5 годин які змінять як ти працюєш</h2>
-    <div class="timeline">
-      <div class="block">
-        <div class="block-header">
-          <div class="block-num">1</div>
-          <div class="block-title">Ламаємо міф</div>
+    <div class="label">Програма</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:8px">5 годин які змінять як ти працюєш</h2>
+    <p style="color:var(--muted);margin-bottom:32px">Покроково, без зайвого, з результатом в руках.</p>
+    <div class="program-grid">
+
+      <div class="prog-block">
+        <div class="prog-header">
+          <span class="prog-num">01</span>
+          <span class="prog-title">Ламаємо міф</span>
         </div>
-        <div class="block-body">
+        <div class="prog-body">
           <ul>
             <li>"Я не технічна людина" → розбираємо чому це неправда</li>
             <li>Дивимось на живих агентів в реальному часі</li>
@@ -427,12 +566,13 @@
           </ul>
         </div>
       </div>
-      <div class="block">
-        <div class="block-header">
-          <div class="block-num">2</div>
-          <div class="block-title">Готуємо середовище</div>
+
+      <div class="prog-block">
+        <div class="prog-header">
+          <span class="prog-num">02</span>
+          <span class="prog-title">Готуємо середовище</span>
         </div>
-        <div class="block-body">
+        <div class="prog-body">
           <ul>
             <li>Підключаємось до сервера через VS Code</li>
             <li>Запускаємо Claude Code</li>
@@ -440,13 +580,14 @@
           </ul>
         </div>
       </div>
-      <div class="block" style="border-color: rgba(124,58,237,.5); background: rgba(124,58,237,.06)">
-        <div class="block-header">
-          <div class="block-num">3</div>
-          <div class="block-title">Будуємо агента разом</div>
-          <span class="block-star">⭐ головний блок</span>
+
+      <div class="prog-block">
+        <div class="prog-header star">
+          <span class="prog-num">03</span>
+          <span class="prog-title">Будуємо агента разом</span>
+          <span class="prog-badge">⭐ головний блок</span>
         </div>
-        <div class="block-body">
+        <div class="prog-body">
           <ul>
             <li>Описуємо агента → Claude Code будує</li>
             <li>Налаштовуємо пам'ять, інструменти, характер</li>
@@ -454,12 +595,13 @@
           </ul>
         </div>
       </div>
-      <div class="block">
-        <div class="block-header">
-          <div class="block-num">4</div>
-          <div class="block-title">Робиш свого</div>
+
+      <div class="prog-block">
+        <div class="prog-header">
+          <span class="prog-num">04</span>
+          <span class="prog-title">Робиш свого</span>
         </div>
-        <div class="block-body">
+        <div class="prog-body">
           <ul>
             <li>Додаєш інструменти під свій кейс</li>
             <li>Підключаєш Google, Gmail, Calendar</li>
@@ -467,12 +609,13 @@
           </ul>
         </div>
       </div>
-      <div class="block">
-        <div class="block-header">
-          <div class="block-num">5</div>
-          <div class="block-title">Демо і що далі</div>
+
+      <div class="prog-block">
+        <div class="prog-header">
+          <span class="prog-num">05</span>
+          <span class="prog-title">Демо і що далі</span>
         </div>
-        <div class="block-body">
+        <div class="prog-body">
           <ul>
             <li>Кожен показує свого агента групі</li>
             <li>Roadmap: куди рухатись після воркшопу</li>
@@ -480,156 +623,169 @@
           </ul>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ══════════════ FOR WHOM ══════════════ -->
-<section class="section">
+<!-- FOR WHOM -->
+<section>
   <div class="container">
-    <span class="tag">Для кого</span>
-    <h2>Цей воркшоп для тебе якщо ти:</h2>
-    <ul class="yes-list">
-      <li>HR generalist, рекрутер або HRBP</li>
-      <li>Хочеш автоматизувати рутину але не знаєш з чого почати</li>
-      <li>Ніколи не писала код — і не збираєшся</li>
-      <li>Вже чула про AI але хочеш нарешті зробити щось своє</li>
-      <li>Готова витратити 5 годин щоб заощадити сотні</li>
-    </ul>
-    <ul class="no-list">
-      <li>Не підходить якщо ти вже маєш агентів і хочеш advanced архітектуру</li>
-    </ul>
+    <div class="label">Для кого</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:8px">Це для тебе якщо:</h2>
+    <div class="whom-yes">
+      <div class="whom-item yes"><span>✅</span><span>HR generalist, рекрутер або HRBP</span></div>
+      <div class="whom-item yes"><span>✅</span><span>Хочеш автоматизувати рутину але не знаєш з чого почати</span></div>
+      <div class="whom-item yes"><span>✅</span><span>Ніколи не писала код — і не збираєшся</span></div>
+      <div class="whom-item yes"><span>✅</span><span>Вже чула про AI але хочеш нарешті зробити щось своє</span></div>
+      <div class="whom-item yes"><span>✅</span><span>Готова витратити 5 годин щоб заощадити сотні</span></div>
+    </div>
+    <div class="whom-no" style="margin-top:12px">
+      <div class="whom-item no"><span>❌</span><span>Не підходить якщо ти вже маєш агентів і хочеш advanced архітектуру</span></div>
+    </div>
   </div>
 </section>
 
-<!-- ══════════════ SPEAKER ══════════════ -->
-<section class="section">
+<!-- SPEAKER -->
+<section>
   <div class="container">
-    <span class="tag">Хто веде</span>
-    <h2>Ірина — HR яка будує AI-агентів</h2>
-    <div class="speaker-card">
-      <div class="speaker-name">Ірина</div>
-      <div class="speaker-role">Head of HR · 7 років в рекрутингу та HR</div>
-      <p style="color:var(--muted);margin-bottom:20px">
-        Я не теоретик. У мене є живі агенти які працюють щодня:
-      </p>
-      <div class="agents">
-        <div class="agent"><span class="ico">🤖</span><div><strong>Люмус</strong> — мій особистий HR-асистент в Telegram</div></div>
-        <div class="agent"><span class="ico">👁</span><div><strong>Аргус</strong> — слідкує за конкурентами і транскрибує їх контент</div></div>
-        <div class="agent"><span class="ico">🌟</span><div><strong>Сіріус</strong> — персональний асистент з розширеною пам'яттю</div></div>
+    <div class="label">Хто веде</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:32px">HR яка будує AI-агентів</h2>
+    <div class="speaker-wrap">
+      <div class="speaker-top">
+        <div class="speaker-name">Ірина</div>
+        <div class="speaker-role">Head of HR · 7 років в рекрутингу та HR</div>
+        <p class="speaker-bio">
+          Я не теоретик. Я побудувала своїх агентів без технічної освіти — через VS Code і Claude Code. Вони реально працюють щодня. Тепер покажу як це зробити тобі.
+        </p>
       </div>
-      <p style="color:var(--muted)">
-        Я побудувала їх без технічної освіти — через VS Code і Claude Code.<br>
-        Тепер покажу як це зробити тобі.
-      </p>
-      <p style="margin-top:16px">
-        Telegram: <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a>
-      </p>
+      <div class="speaker-bottom">
+        <div class="agents-title">Мої агенти які вже працюють:</div>
+        <div class="agents">
+          <div class="agent-item">
+            <span class="agent-ico">🤖</span>
+            <span><span class="agent-name">Люмус</span><span class="agent-desc">— мій особистий HR-асистент в Telegram</span></span>
+          </div>
+          <div class="agent-item">
+            <span class="agent-ico">👁</span>
+            <span><span class="agent-name">Аргус</span><span class="agent-desc">— слідкує за конкурентами і транскрибує їх контент</span></span>
+          </div>
+          <div class="agent-item">
+            <span class="agent-ico">🌟</span>
+            <span><span class="agent-name">Сіріус</span><span class="agent-desc">— персональний асистент з розширеною пам'яттю</span></span>
+          </div>
+        </div>
+        <p class="speaker-tg">Telegram: <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a></p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ PRICE ══════════════ -->
-<section class="section">
+<!-- PRICE -->
+<section>
   <div class="container">
-    <span class="tag">Ціна та реєстрація</span>
-    <h2>Два місця ще є</h2>
+    <div class="label">Ціна</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:8px">Два місця ще є</h2>
+    <p style="color:var(--muted);margin-bottom:0">Early bird закривається при заповненні групи.</p>
     <div class="price-card">
-      <div class="price-label">🐦 Early bird</div>
-      <div class="price-main">79 €</div>
-      <div class="price-old">повна ціна 99 €</div>
-
-      <ul class="includes">
-        <li>5-годинний живий воркшоп в Zoom</li>
-        <li>Власний робочий AI-агент в Telegram</li>
-        <li>Промпт для Claude Code який будує агента</li>
-        <li>Покрокова інструкція налаштування</li>
-        <li>Закритий Telegram-чат учасників</li>
-        <li>Підтримка після воркшопу</li>
-      </ul>
-
-      <!-- ══ WayForPay КНОПКА ══
-           Коли матимеш merchantAccount — заміни YOUR_MERCHANT_ACCOUNT
-           і вкажи реальний orderReference та підпис (merchantSignature).
-           Документація: https://wiki.wayforpay.com/view/852102
-      -->
-      <div id="wfp-btn-wrapper">
-        <button class="btn btn-pay" onclick="payWithWFP()">
-          💳 Оплатити онлайн — 79 €
-        </button>
+      <div class="price-top">
+        <div class="price-main">79 €</div>
+        <div class="price-meta">
+          <div class="price-old">повна ціна 99 €</div>
+          <div class="price-tag">🐦 Early bird</div>
+        </div>
       </div>
-      <!-- / WayForPay -->
+      <div class="price-body">
+        <div class="includes">
+          <div class="include-item"><span class="include-check">✓</span><span>5-годинний живий воркшоп в Zoom</span></div>
+          <div class="include-item"><span class="include-check">✓</span><span>Власний робочий AI-агент в Telegram</span></div>
+          <div class="include-item"><span class="include-check">✓</span><span>Промпт для Claude Code який будує агента</span></div>
+          <div class="include-item"><span class="include-check">✓</span><span>Покрокова інструкція налаштування</span></div>
+          <div class="include-item"><span class="include-check">✓</span><span>Закритий Telegram-чат учасників</span></div>
+          <div class="include-item"><span class="include-check">✓</span><span>Підтримка після воркшопу</span></div>
+        </div>
 
-      <p style="margin:16px 0 8px;color:var(--muted);font-size:.95rem;">або напряму в Telegram:</p>
-      <a href="https://t.me/IrynaS_HR" class="btn btn-tg" target="_blank">Хочу потрапити → @IrynaS_HR</a>
-      <div class="price-note">Напиши "Воркшоп" і я надішлю деталі</div>
+        <!-- WayForPay кнопка
+             Документація: https://wiki.wayforpay.com/view/852102
+             Замінити: merchantAccount, merchantDomainName, merchantSignature -->
+        <div id="wfp-wrapper" style="margin-top:28px">
+          <button class="btn btn-orange" onclick="payWithWFP()" style="width:100%;text-align:center;font-size:.95rem;padding:18px;">
+            💳 Оплатити онлайн — 79 €
+          </button>
+        </div>
+
+        <div class="price-cta-row">
+          <span class="price-or">або зареєструватись через Telegram</span>
+          <a href="https://t.me/IrynaS_HR" class="btn btn-black" target="_blank">Написати → @IrynaS_HR</a>
+          <span class="price-hint">Напиши "Воркшоп" — і я надішлю деталі</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ FAQ ══════════════ -->
-<section class="section">
+<!-- FAQ -->
+<section>
   <div class="container">
-    <span class="tag">FAQ</span>
-    <h2>Часті запитання</h2>
+    <div class="label">FAQ</div>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:32px">Часті запитання</h2>
     <div class="faq">
       <div class="faq-item">
-        <div class="faq-q">Я ніколи не працювала з кодом. Чи впораюсь?</div>
+        <button class="faq-q">Я ніколи не працювала з кодом. Чи впораюсь?<span class="faq-icon">+</span></button>
         <div class="faq-a">Так. Воркшоп побудований саме для людей без технічного досвіду. Claude Code пише код за тебе — ти описуєш задачу словами.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Що мені потрібно підготувати заздалегідь?</div>
+        <button class="faq-q">Що мені потрібно підготувати заздалегідь?<span class="faq-icon">+</span></button>
         <div class="faq-a">Claude Pro ($20/міс), Anthropic API key ($5), Telegram бот, GitHub акаунт і VS Code. Детальна інструкція надходить після реєстрації.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Скільки коштує підтримка агента щомісяця?</div>
+        <button class="faq-q">Скільки коштує підтримка агента щомісяця?<span class="faq-icon">+</span></button>
         <div class="faq-a">VPS $6/міс + Anthropic API (орієнтовно $5–15/міс). Разом ~$20–25/міс.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Чи буде запис воркшопу?</div>
+        <button class="faq-q">Чи буде запис воркшопу?<span class="faq-icon">+</span></button>
         <div class="faq-a">Запису не буде — це камерний живий формат де важлива твоя присутність і практика.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Що якщо щось не вийде під час воркшопу?</div>
+        <button class="faq-q">Що якщо щось не вийде під час воркшопу?<span class="faq-icon">+</span></button>
         <div class="faq-a">Ми працюємо в малій групі — у кожного буде підтримка. Плюс закритий чат де можна дописати після.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Коли наступний воркшоп?</div>
+        <button class="faq-q">Коли наступний воркшоп?<span class="faq-icon">+</span></button>
         <div class="faq-a">Дата буде оголошена після закриття поточної групи. Early bird діє до заповнення місць.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ FINAL CTA ══════════════ -->
-<section class="final-cta">
+<!-- FINAL CTA -->
+<section class="final">
   <div class="container">
     <h2>Твій AI-агент не з'явиться сам.</h2>
     <p>Але з'явиться якщо ти зробиш один крок.</p>
-    <a href="https://t.me/IrynaS_HR" class="btn btn-primary" target="_blank">Зареєструватись → @IrynaS_HR</a>
-    <p style="color:var(--muted);margin-top:16px;font-size:.95rem">Напиши "Воркшоп" — і я надішлю всі деталі.</p>
+    <a href="https://t.me/IrynaS_HR" class="btn btn-orange" target="_blank">Зареєструватись → @IrynaS_HR</a>
+    <p class="final-hint">Напиши "Воркшоп" — і я надішлю всі деталі.</p>
   </div>
 </section>
 
 <footer>
-  <div class="container">
-    © 2025 Ірина · <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a>
+  <div class="footer-inner">
+    <span>© 2025 Ірина</span>
+    <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a>
   </div>
 </footer>
 
-<!-- ══ WayForPay JS ══ -->
+<!-- WayForPay -->
 <script src="https://secure.wayforpay.com/server/pay-widget.js"></script>
 <script>
   function payWithWFP() {
-    // ⚠️ ЗАМІНИТИ перед запуском:
-    //   merchantAccount — назва магазину з кабінету WayForPay
+    // ⚠️ Замінити перед запуском:
+    //   merchantAccount    — назва магазину з кабінету WayForPay
     //   merchantDomainName — домен де розміщений лендінг
-    //   merchantSignature — HMAC-MD5 підпис (генерується на сервері або через скрипт)
-    //   Документація: https://wiki.wayforpay.com/view/852102
-
+    //   merchantSignature  — HMAC-MD5 підпис (документація: https://wiki.wayforpay.com/view/852102)
     var wfpOrder = {
-      merchantAccount:    "YOUR_MERCHANT_ACCOUNT",   // <- замінити
-      merchantDomainName: "your-domain.com",          // <- замінити
+      merchantAccount:    "YOUR_MERCHANT_ACCOUNT",
+      merchantDomainName: "aleksandrovnairina.github.io",
       authorizationType:  "SimpleSignature",
       merchantTransactionSecureType: "AUTO",
       language: "UA",
@@ -640,15 +796,14 @@
       productName:  ["Воркшоп: Від нуля до AI-агента"],
       productCount: [1],
       productPrice: [79],
-      merchantSignature: "YOUR_SIGNATURE"             // <- замінити
+      merchantSignature: "YOUR_SIGNATURE"
     };
-
     wayforpay.run(wfpOrder);
   }
 
-  // ── FAQ accordion ──
-  document.querySelectorAll('.faq-q').forEach(function(q) {
-    q.addEventListener('click', function() {
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(function(btn) {
+    btn.addEventListener('click', function() {
       this.classList.toggle('open');
       this.nextElementSibling.classList.toggle('open');
     });
