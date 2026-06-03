@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Договір публічної оферти — AI Воркшоп</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black: #0d0d0d;
+      --black2: #161616;
+      --lime: #c6ff00;
+      --white: #ffffff;
+      --gray: #a0a0a0;
+      --border: rgba(255,255,255,.1);
+    }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      background: rgba(13,13,13,.95);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      max-width: 820px; margin: 0 auto; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: .95rem; font-weight: 700;
+      color: var(--white); text-decoration: none;
+    }
+    .nav-logo span { color: var(--lime); }
+    .nav-back {
+      font-size: .85rem; color: var(--gray); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color .15s;
+    }
+    .nav-back:hover { color: var(--lime); }
+
+    .container { max-width: 820px; margin: 0 auto; padding: 0 28px; }
+
+    .doc-header {
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-label {
+      font-family: 'Space Mono', monospace;
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 16px;
+      display: block;
+    }
+    .doc-label::before { content: '// '; opacity: .5; }
+    .doc-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700; line-height: 1.2; margin-bottom: 12px;
+    }
+    .doc-meta { color: var(--gray); font-size: .9rem; }
+
+    .doc-body { padding: 48px 0 80px; }
+
+    h2 {
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--lime);
+      margin: 40px 0 14px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: .04em;
+    }
+    h2:first-child { margin-top: 0; }
+
+    p { color: var(--gray); margin-bottom: 12px; font-size: .97rem; }
+    p strong { color: var(--white); }
+
+    ul, ol {
+      color: var(--gray); font-size: .97rem;
+      padding-left: 20px; margin-bottom: 12px;
+      display: grid; gap: 6px;
+    }
+
+    .highlight {
+      background: var(--black2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--lime);
+      border-radius: 6px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      color: var(--gray);
+      font-size: .95rem;
+    }
+    .highlight strong { color: var(--white); }
+
+    .placeholder {
+      background: rgba(198,255,0,.07);
+      border: 1px dashed rgba(198,255,0,.35);
+      border-radius: 6px;
+      padding: 4px 10px;
+      color: var(--lime);
+      font-family: 'Space Mono', monospace;
+      font-size: .85rem;
+      display: inline-block;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .footer-inner {
+      max-width: 820px; margin: 0 auto; padding: 0 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .82rem; color: var(--gray); flex-wrap: wrap; gap: 8px;
+    }
+    footer a { color: var(--lime); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">AI<span>_agent</span></a>
+    <a class="nav-back" href="index.html">← Повернутись на лендінг</a>
+  </div>
+</nav>
+
+<div class="doc-header">
+  <div class="container">
+    <span class="doc-label">Юридичний документ</span>
+    <h1 class="doc-title">Договір публічної оферти</h1>
+    <p class="doc-meta">
+      Дата публікації: <span class="placeholder">ДД.ММ.РРРР</span> &nbsp;·&nbsp;
+      Редакція: 1.0
+    </p>
+  </div>
+</div>
+
+<div class="doc-body">
+  <div class="container">
+
+    <div class="highlight">
+      <strong>Увага.</strong> Цей документ є публічною офертою. Оплата участі у воркшопі означає повне та безумовне прийняття (акцепт) умов цього договору відповідно до ст. 633, 641, 642 Цивільного кодексу України.
+    </div>
+
+    <h2>1. ЗАГАЛЬНІ ПОЛОЖЕННЯ</h2>
+    <p>
+      <strong>1.1.</strong> Цей договір публічної оферти (далі — Договір) укладається між фізичною особою-підприємцем
+      <span class="placeholder">ПІБ ФОП</span>, РНОКПП <span class="placeholder">XXXXXXXXXX</span>
+      (далі — Виконавець), та фізичною особою, яка здійснила оплату (далі — Замовник).
+    </p>
+    <p>
+      <strong>1.2.</strong> Договір вважається укладеним з моменту отримання Виконавцем оплати від Замовника.
+    </p>
+    <p>
+      <strong>1.3.</strong> Виконавець залишає за собою право вносити зміни до умов цього Договору без попереднього повідомлення Замовника. Актуальна редакція розміщена за адресою: <span class="placeholder">URL сторінки оферти</span>.
+    </p>
+
+    <h2>2. ПРЕДМЕТ ДОГОВОРУ</h2>
+    <p>
+      <strong>2.1.</strong> Виконавець зобов'язується надати Замовнику доступ до участі у онлайн-воркшопі
+      <strong>«Від нуля до AI-агента»</strong> (далі — Воркшоп), а Замовник зобов'язується оплатити послуги в порядку та на умовах, визначених цим Договором.
+    </p>
+    <p>
+      <strong>2.2.</strong> Формат надання послуг: живий онлайн-захід в відеоконференції Zoom тривалістю 5 (п'ять) годин.
+    </p>
+    <p>
+      <strong>2.3.</strong> Дата проведення Воркшопу: <span class="placeholder">ДД.ММ.РРРР</span>, час: <span class="placeholder">ГГ:ХХ</span> (за київським часом).
+    </p>
+
+    <h2>3. ВАРТІСТЬ ПОСЛУГ ТА ПОРЯДОК ОПЛАТИ</h2>
+    <p>
+      <strong>3.1.</strong> Вартість участі у Воркшопі становить <strong>79 євро (EUR)</strong> за умови оплати за тарифом "Early bird", або <strong>99 євро (EUR)</strong> за повним тарифом.
+    </p>
+    <p>
+      <strong>3.2.</strong> Оплата здійснюється у гривневому еквіваленті за курсом НБУ на дату проведення платежу.
+    </p>
+    <p>
+      <strong>3.3.</strong> Оплата здійснюється через платіжний сервіс WayForPay або в інший спосіб, погоджений з Виконавцем.
+    </p>
+    <p>
+      <strong>3.4.</strong> Факт оплати підтверджується платіжним документом, сформованим платіжним сервісом.
+    </p>
+
+    <h2>4. ПРАВА ТА ОБОВ'ЯЗКИ ВИКОНАВЦЯ</h2>
+    <p><strong>4.1.</strong> Виконавець зобов'язується:</p>
+    <ul>
+      <li>надати Замовнику посилання для участі у Воркшопі не пізніше ніж за 24 години до початку;</li>
+      <li>провести Воркшоп у заявлені дату та час або повідомити про перенесення не пізніше ніж за 48 годин;</li>
+      <li>надати доступ до закритого Telegram-чату учасників після завершення Воркшопу;</li>
+      <li>надати додаткові матеріали, зазначені в описі Воркшопу.</li>
+    </ul>
+    <p><strong>4.2.</strong> Виконавець має право:</p>
+    <ul>
+      <li>переносити дату Воркшопу з попереднім повідомленням Замовника;</li>
+      <li>відмовити в участі особі, яка порушує правила поведінки під час Воркшопу;</li>
+      <li>залучати третіх осіб до надання послуг.</li>
+    </ul>
+
+    <h2>5. ПРАВА ТА ОБОВ'ЯЗКИ ЗАМОВНИКА</h2>
+    <p><strong>5.1.</strong> Замовник зобов'язується:</p>
+    <ul>
+      <li>своєчасно здійснити оплату послуг;</li>
+      <li>самостійно забезпечити технічні умови для участі у Воркшопі (комп'ютер, інтернет, необхідні програми);</li>
+      <li>не записувати, не копіювати та не поширювати матеріали Воркшопу без письмового дозволу Виконавця.</li>
+    </ul>
+    <p><strong>5.2.</strong> Замовник має право:</p>
+    <ul>
+      <li>звернутись до Виконавця з питаннями щодо підготовки до Воркшопу;</li>
+      <li>отримати повернення коштів у порядку, передбаченому розділом 6 цього Договору.</li>
+    </ul>
+
+    <h2>6. ПОВЕРНЕННЯ КОШТІВ</h2>
+    <p>
+      <strong>6.1.</strong> Замовник має право відмовитись від участі та отримати повне повернення коштів, якщо звернення надійшло не пізніше ніж за <strong>5 (п'ять) календарних днів</strong> до дати проведення Воркшопу.
+    </p>
+    <p>
+      <strong>6.2.</strong> У разі відмови від участі менш ніж за 5 днів до дати проведення Воркшопу, кошти не повертаються. Замовник може передати своє місце іншій особі, попередньо повідомивши Виконавця.
+    </p>
+    <p>
+      <strong>6.3.</strong> У разі скасування Воркшопу з ініціативи Виконавця, кошти повертаються у повному обсязі протягом 7 робочих днів.
+    </p>
+    <p>
+      <strong>6.4.</strong> Повернення коштів здійснюється тим самим способом, яким було здійснено оплату.
+    </p>
+
+    <h2>7. ІНТЕЛЕКТУАЛЬНА ВЛАСНІСТЬ</h2>
+    <p>
+      <strong>7.1.</strong> Всі матеріали Воркшопу (промпти, інструкції, презентації тощо) є інтелектуальною власністю Виконавця.
+    </p>
+    <p>
+      <strong>7.2.</strong> Замовник отримує право використовувати отримані матеріали виключно для особистих потреб без права передачі третім особам та без права комерційного використання.
+    </p>
+
+    <h2>8. КОНФІДЕНЦІЙНІСТЬ</h2>
+    <p>
+      <strong>8.1.</strong> Виконавець зобов'язується не передавати персональні дані Замовника третім особам без його згоди, крім випадків, передбачених законодавством України.
+    </p>
+    <p>
+      <strong>8.2.</strong> Погоджуючись з умовами цього Договору, Замовник надає згоду на обробку своїх персональних даних (ім'я, контактний номер телефону, електронна адреса) з метою надання послуг.
+    </p>
+
+    <h2>9. ВІДПОВІДАЛЬНІСТЬ СТОРІН</h2>
+    <p>
+      <strong>9.1.</strong> Виконавець не несе відповідальності за технічні збої на стороні Замовника (відсутність інтернету, несправність обладнання тощо).
+    </p>
+    <p>
+      <strong>9.2.</strong> Виконавець не гарантує конкретних фінансових результатів від застосування знань, отриманих на Воркшопі.
+    </p>
+    <p>
+      <strong>9.3.</strong> Сукупна відповідальність Виконавця перед Замовником обмежена вартістю оплачених послуг.
+    </p>
+
+    <h2>10. ФОРС-МАЖОР</h2>
+    <p>
+      <strong>10.1.</strong> Сторони звільняються від відповідальності за невиконання зобов'язань у разі настання обставин непереборної сили (воєнний стан, стихійні лиха, дії органів державної влади тощо).
+    </p>
+    <p>
+      <strong>10.2.</strong> У разі настання форс-мажорних обставин Виконавець повідомляє Замовника та узгоджує нову дату проведення Воркшопу або здійснює повернення коштів.
+    </p>
+
+    <h2>11. ВИРІШЕННЯ СПОРІВ</h2>
+    <p>
+      <strong>11.1.</strong> Всі спори вирішуються шляхом переговорів. У разі недосягнення згоди — в судовому порядку відповідно до законодавства України.
+    </p>
+
+    <h2>12. РЕКВІЗИТИ ВИКОНАВЦЯ</h2>
+    <div class="highlight">
+      <p><strong>ФОП:</strong> <span class="placeholder">Прізвище Ім'я По-батькові</span></p>
+      <p><strong>РНОКПП:</strong> <span class="placeholder">XXXXXXXXXX</span></p>
+      <p><strong>IBAN:</strong> <span class="placeholder">UA00 0000 0000 0000 0000 0000 0000</span></p>
+      <p><strong>Банк:</strong> <span class="placeholder">Назва банку</span></p>
+      <p><strong>Email:</strong> <span class="placeholder">your@email.com</span></p>
+      <p><strong>Telegram:</strong> <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a></p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2025 Ірина · <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a></span>
+    <a href="index.html">← Повернутись на лендінг</a>
+  </div>
+</footer>
+
+</body>
+</html>
