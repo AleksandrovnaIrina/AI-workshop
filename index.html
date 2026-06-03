@@ -719,8 +719,8 @@
         <li class="price-inc"><span class="inc-chk">✓</span><span>Власний робочий AI-агент в Telegram</span></li>
         <li class="price-inc"><span class="inc-chk">✓</span><span>Промпт для Claude Code який будує агента</span></li>
         <li class="price-inc"><span class="inc-chk">✓</span><span>Покрокова інструкція налаштування</span></li>
-        <li class="price-inc"><span class="inc-chk">✓</span><span>Закритий Telegram-чат учасників</span></li>
-        <li class="price-inc"><span class="inc-chk">✓</span><span>Підтримка після воркшопу</span></li>
+        <li class="price-inc"><span class="inc-chk">✓</span><span>Закритий чат для обміну ідеями та кейсами між учасниками</span></li>
+        <li class="price-inc"><span class="inc-chk">✓</span><span>7 днів підтримки від Ірини в чаті після воркшопу</span></li>
       </ul>
       <!-- WayForPay: замінити merchantAccount і merchantSignature -->
       <button class="pay-btn" onclick="payWithWFP()">💳 Оплатити онлайн — 79 €</button>
@@ -843,22 +843,31 @@
   window.addEventListener('resize', function(){ resize(); init(); });
 })();
 </script>
-<script src="https://secure.wayforpay.com/server/pay-widget.js"></script>
+<!-- WayForPay hidden form — редирект на сторінку оплати
+     Заповнити перед запуском:
+       merchantAccount  — назва магазину з кабінету WayForPay
+       merchantSignature — HMAC-MD5 підпис (docs: https://wiki.wayforpay.com/view/852102)
+       returnUrl        — посилання на Telegram-групу воркшопу після оплати
+-->
+<form id="wfp-form" method="post" action="https://secure.wayforpay.com/pay" style="display:none">
+  <input name="merchantAccount"    value="YOUR_MERCHANT_ACCOUNT" />
+  <input name="merchantDomainName" value="aleksandrovnairina.github.io" />
+  <input name="orderReference"     value="ai_workshop_hr_001" />
+  <input name="orderDate"          id="wfp-date" value="" />
+  <input name="amount"             value="79" />
+  <input name="currency"           value="EUR" />
+  <input name="productName[]"      value="AI Agent для HR та рекрутерів: без знання коду" />
+  <input name="productCount[]"     value="1" />
+  <input name="productPrice[]"     value="79" />
+  <input name="merchantSignature"  value="YOUR_SIGNATURE" />
+  <input name="returnUrl"          value="YOUR_TELEGRAM_GROUP_LINK" />
+  <input name="language"           value="UA" />
+</form>
+
 <script>
   function payWithWFP() {
-    var wfpOrder = {
-      merchantAccount:    "YOUR_MERCHANT_ACCOUNT",
-      merchantDomainName: "aleksandrovnairina.github.io",
-      authorizationType:  "SimpleSignature",
-      merchantTransactionSecureType: "AUTO",
-      language: "UA", currency: "EUR", amount: 79,
-      orderReference: "workshop_" + Date.now(),
-      orderDate: Math.floor(Date.now() / 1000),
-      productName:  ["AI Agent для HR та рекрутерів: без знання коду"],
-      productCount: [1], productPrice: [79],
-      merchantSignature: "YOUR_SIGNATURE"
-    };
-    wayforpay.run(wfpOrder);
+    document.getElementById('wfp-date').value = Math.floor(Date.now() / 1000);
+    document.getElementById('wfp-form').submit();
   }
 
   document.querySelectorAll('.faq-q').forEach(function(btn) {
