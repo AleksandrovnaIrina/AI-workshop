@@ -339,7 +339,7 @@
       font-weight: 400; color: var(--lime); line-height: 1;
     }
     .price-side { padding-bottom: 8px; }
-    .price-old { text-decoration: line-through; color: var(--dim); font-size: 1rem; margin-bottom: 6px; }
+    .price-old { text-decoration: line-through; color: var(--dim); font-size: 2.2rem; font-family: 'DM Serif Display', serif; margin-bottom: 8px; }
     .price-badge {
       display: inline-block; background: var(--lime); color: var(--bg);
       font-family: 'Space Mono', monospace; font-size: .66rem; font-weight: 700;
@@ -428,6 +428,44 @@
       z-index: 1;
     }
 
+    /* ── MID CTA ── */
+    .mid-cta {
+      margin-top: 48px; padding-top: 40px;
+      border-top: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .mid-cta-btn {
+      background: var(--lime); color: var(--bg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .9rem; font-weight: 700;
+      padding: 14px 32px; border-radius: 6px;
+      border: none; cursor: pointer;
+      transition: opacity .15s, transform .12s;
+      white-space: nowrap;
+    }
+    .mid-cta-btn:hover { opacity: .88; transform: translateY(-2px); }
+    .mid-cta-note { font-size: .82rem; color: var(--dim); }
+    .mid-cta-note strong { color: var(--lime); }
+
+    /* ── SCARCITY ── */
+    .scarcity-block {
+      display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+      background: rgba(198,255,0,.05);
+      border: 1px solid rgba(198,255,0,.25);
+      border-radius: 8px; padding: 28px 32px; margin-bottom: 44px;
+    }
+    .scarcity-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem; color: var(--lime); line-height: 1; flex-shrink: 0;
+    }
+    .scarcity-label { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .scarcity-sub { font-size: .9rem; color: var(--dim); line-height: 1.6; }
+    .scarcity-bar-wrap {
+      margin-top: 12px; height: 5px; background: rgba(255,255,255,.1);
+      border-radius: 3px; width: 220px; max-width: 100%;
+    }
+    .scarcity-bar-fill { height: 100%; background: var(--lime); border-radius: 3px; width: 88%; }
+
     /* ── MOBILE ── */
     @media (max-width: 680px) {
       .wrap { padding: 0 20px; }
@@ -445,6 +483,8 @@
       .prog-idx { font-size: 2rem; }
       .prog-badge { display: none; }
       .price-big { font-size: 4.5rem; }
+      .scarcity-num { font-size: 3.5rem; }
+      .scarcity-block { padding: 20px; gap: 16px; }
       .final { padding: 72px 0; }
       .final h2 { font-size: 2.4rem; }
       .cta-row { flex-direction: column; align-items: flex-start; }
@@ -505,6 +545,10 @@
       <div class="pain-item"><span class="pain-n">23:00</span><span>Читаєш про AI в LinkedIn. Думаєш: "Це не для мене, я цього не знаю." Закриваєш вкладку.</span></div>
     </div>
     <p class="pain-pull">Ти не встигаєш не тому що повільна. А тому що робиш те, що давно має робити машина.</p>
+    <div class="mid-cta">
+      <button class="mid-cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
+      <span class="mid-cta-note">🔥 <strong>Early bird</strong> · Лишилось кілька місць</span>
+    </div>
   </div>
 </section>
 
@@ -627,6 +671,10 @@
         </div>
       </div>
     </div>
+    <div class="mid-cta">
+      <button class="mid-cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
+      <span class="mid-cta-note">🔥 <strong>Early bird</strong> · Лишилось кілька місць</span>
+    </div>
   </div>
 </section>
 
@@ -676,6 +724,10 @@
         <div class="review-role">Senior Recruiter</div>
       </div>
     </div>
+    <div class="mid-cta">
+      <button class="mid-cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
+      <span class="mid-cta-note">🔥 <strong>Early bird</strong> · Лишилось кілька місць</span>
+    </div>
   </div>
 </section>
 
@@ -716,7 +768,14 @@
 <section class="section">
   <div class="wrap">
     <span class="eyebrow">Ціна</span>
-    <h2>Група майже набрана.<br><em>Лишилось кілька місць.</em></h2>
+    <div class="scarcity-block">
+      <div class="scarcity-num">3</div>
+      <div>
+        <div class="scarcity-label">Лишилось 3 місця з 25</div>
+        <div class="scarcity-sub">Група майже набрана. Після заповнення ціна зростає до 99 €.</div>
+        <div class="scarcity-bar-wrap"><div class="scarcity-bar-fill"></div></div>
+      </div>
+    </div>
     <div class="price-wrap">
       <div class="price-roi">
         💡 10 годин на тиждень × 4 тижні = <strong>40 годин щомісяця</strong> — повернуті тобі
