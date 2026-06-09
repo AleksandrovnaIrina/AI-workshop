@@ -7,466 +7,413 @@
   <meta name="description" content="Живий воркшоп для HR, рекрутерів та сорсерів. Побудуй власного AI-агента в Telegram — без знання коду." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     :root {
-      --purple:      #7134E8;
-      --purple-soft: rgba(113,52,232,.08);
-      --purple-mid:  rgba(113,52,232,.18);
-      --bg:          #ffffff;
-      --surface:     #f7f6ff;
-      --text:        #0f0f0f;
-      --muted:       #64748b;
-      --border:      #e4e4e7;
-      --radius:      12px;
+      --purple: #7134E8;
+      --purple-dim: rgba(113,52,232,.15);
+      --dark: #111111;
+      --mid: #1e1e1e;
+      --card-dark: #272727;
+      --gray: #d8d8d8;
+      --card-gray: #ebebeb;
+      --white: #ffffff;
+      --black: #0f0f0f;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
+      background: var(--dark);
+      color: var(--white);
       -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
     }
-
-    .wrap { max-width: 980px; margin: 0 auto; padding: 0 32px; }
 
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 99;
-      background: rgba(255,255,255,.96);
+      background: rgba(17,17,17,.96);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .nav-row {
-      max-width: 980px; margin: 0 auto; padding: 0 32px;
-      height: 64px; display: flex; justify-content: space-between; align-items: center;
+      max-width: 980px; margin: 0 auto; padding: 0 24px;
+      height: 60px; display: flex; justify-content: space-between; align-items: center;
     }
     .logo {
       font-family: 'Space Mono', monospace;
-      font-size: .88rem; font-weight: 700;
-      color: var(--text); text-decoration: none;
+      font-size: .85rem; font-weight: 700; letter-spacing: .04em;
+      color: var(--white); text-decoration: none; text-transform: uppercase;
     }
     .logo em { font-style: normal; color: var(--purple); }
     .nav-btn {
-      background: var(--purple); color: #fff;
+      background: var(--purple); color: var(--white);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: .82rem; font-weight: 700;
-      padding: 10px 22px; border-radius: 8px;
+      font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+      padding: 10px 22px; border-radius: 4px;
       border: none; cursor: pointer; transition: opacity .15s;
     }
     .nav-btn:hover { opacity: .85; }
 
-    /* ── HERO ── */
-    .hero { padding: 80px 0 72px; }
+    /* ── SECTIONS ── */
+    .sec-dark { background: var(--dark); color: var(--white); }
+    .sec-gray { background: var(--gray); color: var(--black); }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
 
+    /* ── TYPOGRAPHY ── */
+    .display {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: .95;
+      letter-spacing: -.01em;
+    }
+    .display-xl { font-size: clamp(3.2rem, 11vw, 7.5rem); }
+    .display-lg { font-size: clamp(2.4rem, 7vw, 5rem); }
+    .display-md { font-size: clamp(1.8rem, 5vw, 3.4rem); }
+
+    .accent { color: var(--purple); }
+    .label-sm {
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    }
+
+    /* bracket number [ 01 ] */
+    .bnum {
+      font-family: 'Space Mono', monospace;
+      font-size: .85rem; font-weight: 700;
+      color: var(--purple); letter-spacing: .04em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 92vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('irina.png');
+      background-size: cover; background-position: top center;
+      filter: brightness(.35);
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      padding: 0 24px 56px; max-width: 980px; margin: 0 auto; width: 100%;
+    }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--purple-soft); border: 1px solid var(--purple-mid);
-      border-radius: 100px; padding: 6px 18px;
-      font-family: 'Space Mono', monospace;
-      font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-      color: var(--purple); margin-bottom: 32px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 2px; padding: 6px 14px; margin-bottom: 28px;
     }
     .hero-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--purple); flex-shrink: 0;
-      animation: pulse 2s infinite;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--purple); animation: pulse 2s infinite;
     }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.2} }
 
-    h1 {
-      font-size: clamp(2.6rem, 6.5vw, 4.6rem);
-      font-weight: 800; line-height: 1.08;
-      letter-spacing: -.03em; margin-bottom: 24px;
-    }
-    h1 em { font-style: normal; color: var(--purple); }
-
+    .hero h1 { margin-bottom: 32px; max-width: 820px; }
     .hero-sub {
-      font-size: 1.12rem; color: var(--muted);
-      max-width: 540px; line-height: 1.75; margin-bottom: 40px;
+      font-size: 1.05rem; color: rgba(255,255,255,.6);
+      max-width: 520px; line-height: 1.7; margin-bottom: 36px;
     }
-
     .cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
     .cta-btn {
-      background: var(--purple); color: #fff;
-      font-size: 1rem; font-weight: 700;
-      padding: 16px 38px; border-radius: 10px;
-      border: none; cursor: pointer;
-      transition: opacity .15s, transform .12s;
+      background: var(--purple); color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .95rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+      padding: 16px 36px; border-radius: 4px;
+      border: none; cursor: pointer; transition: opacity .15s;
     }
-    .cta-btn:hover { opacity: .87; transform: translateY(-1px); }
-    .cta-note { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .cta-btn:hover { opacity: .85; }
+    .cta-note { font-size: .82rem; color: rgba(255,255,255,.5); line-height: 1.6; }
     .cta-note strong { color: var(--purple); }
 
-    .hero-stats {
+    /* Stats bar */
+    .stats-bar {
       display: grid; grid-template-columns: repeat(3,1fr);
-      border: 1px solid var(--border); border-radius: var(--radius);
-      overflow: hidden; margin-top: 60px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      margin-top: 56px;
     }
-    .stat { padding: 28px 24px; border-right: 1px solid var(--border); }
+    .stat { padding: 24px 0; border-right: 1px solid rgba(255,255,255,.1); }
     .stat:last-child { border-right: none; }
     .stat-val {
-      font-family: 'Space Mono', monospace;
-      font-size: 2.6rem; font-weight: 700;
-      color: var(--purple); line-height: 1; margin-bottom: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 3rem; font-weight: 900;
+      color: var(--purple); line-height: 1; display: block; margin-bottom: 4px;
     }
-    .stat-label { font-size: .82rem; color: var(--muted); }
+    .stat-label { font-size: .78rem; color: rgba(255,255,255,.5); line-height: 1.4; }
 
-    /* ── SECTIONS ── */
-    .section { padding: 80px 0; border-top: 1px solid var(--border); }
+    /* ── PAIN COMPARISON ── */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px; }
+    .compare-col { display: grid; gap: 2px; }
+    .compare-card {
+      padding: 24px 20px;
+    }
+    .compare-card.now { background: var(--card-gray); }
+    .compare-card.after { background: var(--purple); }
+    .compare-label {
+      font-family: 'Space Mono', monospace; font-size: .65rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px;
+      display: block; opacity: .7;
+    }
+    .compare-card.after .compare-label { color: rgba(255,255,255,.8); }
+    .compare-text {
+      font-size: .9rem; line-height: 1.65;
+    }
+    .compare-card.now .compare-text { color: #444; }
+    .compare-card.after .compare-text { color: rgba(255,255,255,.9); }
+    .compare-text::before { content: '// '; opacity: .4; font-family: 'Space Mono', monospace; }
 
-    .sec-label {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: 'Space Mono', monospace;
-      font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--purple); margin-bottom: 20px;
+    /* ── WHAT WE BUILD ── */
+    .build-items { margin-top: 48px; display: grid; gap: 2px; }
+    .build-item {
+      display: grid; grid-template-columns: 80px 1fr;
+      background: var(--card-dark); padding: 22px 24px; gap: 16px; align-items: center;
     }
-    .sec-label::before {
-      content: ''; display: block;
-      width: 24px; height: 2px; background: var(--purple);
-      border-radius: 2px;
-    }
+    .build-item-text { font-size: .97rem; color: rgba(255,255,255,.75); }
+    .build-item-text strong { color: var(--white); display: block; margin-bottom: 4px; }
 
-    h2 {
-      font-size: clamp(2rem, 4.5vw, 3.2rem);
-      font-weight: 800; line-height: 1.12;
-      letter-spacing: -.025em; margin-bottom: 48px;
+    /* ── PROGRAM CARDS ── */
+    .prog-cards { margin-top: 48px; display: grid; gap: 2px; }
+    .prog-card {
+      background: var(--card-gray);
+      padding: 28px 24px;
     }
-    h2 em { font-style: normal; color: var(--purple); }
-
-    /* ── PAIN ── */
-    .pain-items { margin-top: 0; }
-    .pain-item {
-      display: flex; gap: 20px;
-      padding: 20px 0; border-top: 1px solid var(--border);
-      font-size: 1rem; color: var(--muted); align-items: baseline;
+    .prog-card.featured { background: var(--purple); color: var(--white); }
+    .prog-card-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 16px;
     }
-    .pain-items .pain-item:last-child { border-bottom: 1px solid var(--border); }
-    .pain-n {
-      font-family: 'Space Mono', monospace;
-      font-size: .72rem; font-weight: 700; color: var(--purple);
-      flex-shrink: 0; min-width: 44px;
+    .prog-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem; font-weight: 800; text-transform: uppercase;
+      color: var(--black); line-height: 1.1; flex: 1;
     }
-    .pain-pull {
-      margin-top: 40px;
-      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
-      font-weight: 700; color: var(--text); line-height: 1.4;
-      padding-left: 20px; border-left: 4px solid var(--purple);
+    .prog-card.featured .prog-card-title { color: var(--white); }
+    .prog-star {
+      font-family: 'Space Mono', monospace; font-size: .62rem; font-weight: 700;
+      background: var(--white); color: var(--purple);
+      padding: 3px 10px; border-radius: 2px; text-transform: uppercase; letter-spacing: .06em;
+      flex-shrink: 0; margin-left: 12px;
     }
-
-    /* ── SOLUTION ── */
-    .sol-rows { margin-top: 0; }
-    .sol-row {
-      display: flex; gap: 16px; align-items: flex-start;
-      padding: 18px 0; border-top: 1px solid var(--border);
-      font-size: 1rem; color: var(--muted);
+    .prog-card.featured .prog-star { background: var(--dark); }
+    .prog-card-pts { list-style: none; }
+    .prog-card-pts li {
+      font-size: .88rem; color: rgba(0,0,0,.6);
+      padding: 7px 0; border-top: 1px solid rgba(0,0,0,.1);
     }
-    .sol-rows .sol-row:last-child { border-bottom: 1px solid var(--border); }
-    .sol-ico { font-size: 1.25rem; flex-shrink: 0; padding-top: 1px; }
-    .sol-row strong { color: var(--text); }
-    .sol-punch {
-      margin-top: 40px;
-      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
-      font-weight: 700; color: var(--text); line-height: 1.4;
-    }
-    .sol-punch em { font-style: normal; color: var(--purple); }
-
-    /* ── BUILD ── */
-    .build-two { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-    .build-col-title {
-      font-family: 'Space Mono', monospace; font-size: .68rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase; color: var(--purple);
-      margin-bottom: 20px; display: block;
-    }
-    .build-list { list-style: none; }
-    .build-li {
-      display: flex; gap: 12px; align-items: center;
-      padding: 13px 0; border-bottom: 1px solid var(--border);
-      font-size: .97rem; color: var(--muted);
-    }
-    .build-li:first-child { border-top: 1px solid var(--border); }
-    .build-ico { font-size: 1.1rem; flex-shrink: 0; }
-    .stack-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-    .stack-tag {
-      font-family: 'Space Mono', monospace; font-size: .64rem; font-weight: 700;
-      letter-spacing: .07em; text-transform: uppercase;
-      padding: 5px 12px; border: 1px solid var(--border);
-      border-radius: 100px; color: var(--muted);
-    }
-    .build-info {
-      margin-top: 20px; padding: 16px 18px;
-      background: var(--surface);
-      border: 1px solid var(--border); border-radius: var(--radius);
-      font-size: .9rem; color: var(--muted); line-height: 1.65;
-    }
-    .build-info strong { color: var(--text); }
-    .build-warn {
-      margin-top: 14px; padding: 16px 18px;
-      background: var(--purple-soft);
-      border-left: 4px solid var(--purple);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      font-size: .95rem; font-weight: 600; color: var(--purple);
-    }
-
-    /* ── PROGRAM ── */
-    .prog-list { margin-top: 0; }
-    .prog-row {
-      display: grid; grid-template-columns: 72px 1fr;
-      border-top: 1px solid var(--border); padding: 28px 0;
-    }
-    .prog-list .prog-row:last-child { border-bottom: 1px solid var(--border); }
-    .prog-row.star {
-      background: var(--purple-soft);
-      margin: 0 -32px; padding: 28px 32px;
-      border-top: 1px solid var(--purple-mid);
-      border-bottom: 1px solid var(--purple-mid);
-    }
-    .prog-idx {
-      font-family: 'Space Mono', monospace;
-      font-size: 1.8rem; font-weight: 700;
-      color: var(--border); line-height: 1; padding-top: 4px;
-    }
-    .prog-row.star .prog-idx { color: var(--purple); }
-    .prog-title {
-      font-size: 1.05rem; font-weight: 700; margin-bottom: 12px;
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    }
-    .prog-badge {
-      font-family: 'Space Mono', monospace; font-size: .6rem; font-weight: 700;
-      background: var(--purple); color: #fff;
-      padding: 3px 10px; border-radius: 100px;
-    }
-    .prog-pts { list-style: none; display: grid; gap: 6px; }
-    .prog-pts li { font-size: .94rem; color: var(--muted); }
-    .prog-pts li::before { content: '→ '; color: var(--purple); }
+    .prog-card-pts li::before { content: '→ '; color: var(--purple); }
+    .prog-card.featured .prog-card-pts li { color: rgba(255,255,255,.8); border-top-color: rgba(255,255,255,.2); }
+    .prog-card.featured .prog-card-pts li::before { color: rgba(255,255,255,.7); }
 
     /* ── FOR WHOM ── */
-    .whom-two { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-    .whom-col-title {
-      font-family: 'Space Mono', monospace; font-size: .68rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase; color: var(--purple);
-      margin-bottom: 16px; display: block;
+    .whom-items { margin-top: 48px; display: grid; gap: 2px; }
+    .whom-item {
+      display: grid; grid-template-columns: 80px 1fr;
+      padding: 22px 24px; gap: 16px; align-items: flex-start;
+      background: var(--card-dark);
     }
-    .whom-list { list-style: none; }
-    .whom-li {
-      display: flex; gap: 12px; align-items: baseline;
-      padding: 12px 0; border-bottom: 1px solid var(--border);
-      font-size: .97rem; color: var(--muted);
-    }
-    .whom-li:first-child { border-top: 1px solid var(--border); }
+    .whom-text { font-size: .97rem; color: rgba(255,255,255,.8); line-height: 1.55; }
+    .whom-no { background: rgba(255,255,255,.05); }
+    .whom-no .whom-text { color: rgba(255,255,255,.4); text-decoration: line-through; }
 
     /* ── MID CTA ── */
     .mid-cta {
-      margin-top: 48px; padding-top: 40px;
-      border-top: 1px solid var(--border);
+      padding: 40px 0; border-top: 1px solid rgba(255,255,255,.08);
       display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
     }
-    .mid-cta-btn {
-      background: var(--purple); color: #fff;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .9rem; font-weight: 700;
-      padding: 14px 32px; border-radius: 10px;
-      border: none; cursor: pointer;
-      transition: opacity .15s, transform .12s;
+    .mid-cta.gray-section {
+      border-top-color: rgba(0,0,0,.12);
     }
-    .mid-cta-btn:hover { opacity: .87; transform: translateY(-1px); }
-    .mid-cta-note { font-size: .82rem; color: var(--muted); }
-    .mid-cta-note strong { color: var(--purple); }
+    .mid-cta-btn {
+      background: var(--purple); color: var(--white);
+      font-size: .85rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+      padding: 14px 32px; border-radius: 4px;
+      border: none; cursor: pointer; transition: opacity .15s;
+    }
+    .mid-cta-btn:hover { opacity: .85; }
+    .mid-cta-note { font-size: .8rem; opacity: .5; }
 
     /* ── REVIEWS ── */
-    .reviews-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-    }
-    .review-card {
-      background: var(--surface); padding: 28px 24px;
-      border: 1px solid var(--border); border-radius: var(--radius);
-    }
+    .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px; }
+    .review-card { background: var(--card-gray); padding: 28px 24px; }
     .review-stars { color: var(--purple); letter-spacing: 3px; font-size: .85rem; margin-bottom: 14px; }
-    .review-text { font-size: 1rem; line-height: 1.72; color: var(--text); margin-bottom: 18px; }
-    .review-author { font-size: .85rem; font-weight: 700; }
-    .review-role { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+    .review-text { font-size: .97rem; line-height: 1.7; color: #333; margin-bottom: 18px; }
+    .review-author { font-size: .85rem; font-weight: 700; color: var(--black); }
+    .review-role { font-size: .75rem; color: #777; margin-top: 3px; }
 
     /* ── SPEAKER ── */
-    .speaker-grid {
-      display: grid; grid-template-columns: 280px 1fr;
-      gap: 52px; align-items: start;
+    .speaker-hero {
+      position: relative; min-height: 60vh;
+      display: flex; align-items: flex-end; overflow: hidden;
     }
-    .speaker-photo {
-      width: 100%; aspect-ratio: 3/4;
-      object-fit: cover; object-position: top;
-      border-radius: var(--radius); display: block;
+    .speaker-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('irina.png');
+      background-size: cover; background-position: top center;
+      filter: brightness(.25);
     }
-    .speaker-name {
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 800; margin-bottom: 6px; line-height: 1.2;
+    .speaker-hero-name {
+      position: absolute; top: 0; left: 0; right: 0;
+      overflow: hidden; padding: 0 24px;
     }
-    .speaker-pos { color: var(--purple); font-size: .85rem; font-weight: 600; line-height: 1.7; margin-bottom: 24px; }
-    .speaker-bio { list-style: none; margin-bottom: 28px; }
+    .speaker-hero-name .big-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(4rem, 18vw, 14rem);
+      font-weight: 900; text-transform: uppercase;
+      color: rgba(255,255,255,.07); line-height: .9;
+      white-space: nowrap;
+    }
+    .speaker-content {
+      position: relative; z-index: 1;
+      padding: 0 24px 48px; max-width: 980px; margin: 0 auto; width: 100%;
+    }
+    .speaker-pos { color: var(--purple); font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 28px; line-height: 1.7; }
+    .speaker-bio { list-style: none; }
     .speaker-bio li {
-      padding: 11px 0; border-bottom: 1px solid var(--border);
-      font-size: .95rem; color: var(--muted);
+      padding: 12px 0; border-top: 1px solid rgba(255,255,255,.08);
+      font-size: .95rem; color: rgba(255,255,255,.65);
     }
-    .speaker-bio li:first-child { border-top: 1px solid var(--border); }
-    .speaker-bio li::before { content: '→ '; color: var(--purple); }
-    .speaker-tg { font-size: .9rem; color: var(--muted); }
-    .speaker-tg a { color: var(--purple); text-decoration: none; font-weight: 700; }
-    .agents-title {
-      font-family: 'Space Mono', monospace; font-size: .66rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
-      margin: 24px 0 14px; display: block;
+    .speaker-bio li:last-child { border-bottom: 1px solid rgba(255,255,255,.08); }
+    .speaker-bio li::before { content: '// '; color: var(--purple); font-family: 'Space Mono'; font-size: .8rem; }
+    .agents-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 28px; }
+    .agent-card {
+      background: var(--card-dark); padding: 16px 18px;
+      border-top: 2px solid var(--purple);
     }
-    .agents-list { display: grid; gap: 8px; }
-    .agent-row {
-      display: flex; gap: 12px; align-items: center;
-      padding: 12px 16px;
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .9rem;
-    }
-    .agent-ico { font-size: 1.1rem; }
-    .agent-name { font-weight: 700; margin-right: 4px; }
-    .agent-desc { color: var(--muted); }
+    .agent-name { font-weight: 700; font-size: .9rem; margin-bottom: 4px; }
+    .agent-desc { font-size: .78rem; color: rgba(255,255,255,.45); }
 
     /* ── PRICE ── */
     .scarcity-block {
-      display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
-      background: var(--purple-soft);
-      border: 1px solid var(--purple-mid);
-      border-radius: var(--radius); padding: 28px 32px; margin-bottom: 44px;
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+      background: var(--card-dark); padding: 28px 24px; margin-bottom: 40px;
+      border-left: 4px solid var(--purple);
     }
     .scarcity-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 4.5rem; font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 5rem; font-weight: 900;
       color: var(--purple); line-height: 1; flex-shrink: 0;
     }
-    .scarcity-label { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-    .scarcity-sub { font-size: .9rem; color: var(--muted); line-height: 1.6; }
-    .scarcity-bar-wrap {
-      margin-top: 12px; height: 5px; background: rgba(0,0,0,.08);
-      border-radius: 3px; width: 220px; max-width: 100%;
+    .scarcity-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem; font-weight: 800; text-transform: uppercase;
+      margin-bottom: 6px;
     }
-    .scarcity-bar-fill { height: 100%; background: var(--purple); border-radius: 3px; width: 88%; }
+    .scarcity-sub { font-size: .85rem; color: rgba(255,255,255,.5); }
+    .scarcity-bar-wrap { margin-top: 10px; height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; width: 200px; max-width: 100%; }
+    .scarcity-bar-fill { height: 100%; background: var(--purple); border-radius: 2px; width: 88%; }
 
-    .price-roi {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--purple-soft); border: 1px solid var(--purple-mid);
-      border-radius: 8px; padding: 12px 18px; margin-bottom: 28px;
-      font-size: .92rem; color: var(--muted);
-    }
-    .price-roi strong { color: var(--purple); }
-
-    .price-hero {
-      display: flex; align-items: flex-end; gap: 24px;
-      padding-bottom: 28px; border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-    .price-big {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(4.5rem, 10vw, 7.5rem);
-      font-weight: 700; color: var(--purple); line-height: 1;
-    }
-    .price-side { padding-bottom: 10px; }
+    .price-block { margin-bottom: 36px; }
     .price-old {
-      text-decoration: line-through; color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 2.2rem; font-weight: 700; margin-bottom: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.5rem; font-weight: 700;
+      color: rgba(255,255,255,.3); text-decoration: line-through;
+      display: inline-block; margin-right: 12px;
+    }
+    .price-current {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(5rem, 16vw, 10rem);
+      font-weight: 900; color: var(--purple); line-height: .9;
+      display: block; margin-top: 8px;
     }
     .price-badge {
-      display: inline-block; background: var(--purple); color: #fff;
-      font-family: 'Space Mono', monospace; font-size: .66rem; font-weight: 700;
-      padding: 5px 14px; border-radius: 100px;
+      display: inline-block; background: var(--purple); color: var(--white);
+      font-family: 'Space Mono', monospace; font-size: .62rem; font-weight: 700;
+      padding: 4px 14px; letter-spacing: .06em; text-transform: uppercase;
+      margin-top: 14px;
     }
-    .price-includes { list-style: none; margin: 28px 0; max-width: 540px; }
+    .price-roi {
+      background: var(--card-dark); padding: 16px 20px; margin-bottom: 28px;
+      font-size: .9rem; color: rgba(255,255,255,.6);
+      border-left: 3px solid var(--purple);
+    }
+    .price-roi strong { color: var(--white); }
+    .price-includes { list-style: none; margin: 32px 0; }
     .price-inc {
-      display: flex; gap: 14px; align-items: center;
-      padding: 12px 0; border-bottom: 1px solid var(--border);
-      font-size: .97rem; color: var(--muted);
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+      font-size: .95rem; color: rgba(255,255,255,.7);
     }
-    .price-inc:first-child { border-top: 1px solid var(--border); }
-    .inc-chk { color: var(--purple); font-weight: 800; flex-shrink: 0; }
+    .price-inc:first-child { border-top: 1px solid rgba(255,255,255,.08); }
+    .inc-chk { color: var(--purple); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
     .pay-btn {
-      background: var(--purple); color: #fff;
+      display: block; width: 100%; max-width: 480px;
+      background: var(--purple); color: var(--white);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.05rem; font-weight: 700;
-      padding: 18px 48px; border-radius: 10px;
-      border: none; cursor: pointer;
-      transition: opacity .15s, transform .12s;
+      font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 20px 48px; border-radius: 4px;
+      border: none; cursor: pointer; transition: opacity .15s;
+      text-align: center;
     }
-    .pay-btn:hover { opacity: .87; transform: translateY(-1px); }
-    .price-note { margin-top: 14px; font-size: .82rem; color: var(--muted); }
+    .pay-btn:hover { opacity: .85; }
+    .price-note { margin-top: 14px; font-size: .8rem; color: rgba(255,255,255,.4); }
     .price-note a { color: var(--purple); text-decoration: none; }
 
     /* ── FAQ ── */
-    .faq-list { margin-top: 0; }
-    .faq-item { border-top: 1px solid var(--border); }
-    .faq-list .faq-item:last-child { border-bottom: 1px solid var(--border); }
+    .faq-list { margin-top: 48px; }
+    .faq-item { border-top: 1px solid rgba(0,0,0,.12); }
+    .faq-list .faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,.12); }
     .faq-q {
       width: 100%; background: none; border: none; text-align: left;
-      font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600;
-      color: var(--text); padding: 20px 0;
+      font-family: 'Space Grotesk', sans-serif; font-size: .97rem; font-weight: 600;
+      color: var(--black); padding: 20px 0;
       cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
     }
     .faq-ico { color: var(--purple); font-size: 1.3rem; flex-shrink: 0; transition: transform .2s; }
     .faq-q.open .faq-ico { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 0 20px; color: var(--muted); font-size: .95rem; line-height: 1.78; max-width: 620px; }
+    .faq-a { display: none; padding: 0 0 20px; color: #555; font-size: .92rem; line-height: 1.75; max-width: 620px; }
     .faq-a.open { display: block; }
 
-    /* ── FINAL ── */
-    .final { padding: 100px 0; border-top: 1px solid var(--border); }
-    .final h2 { margin-bottom: 36px; }
-    .final-note { margin-top: 16px; color: var(--muted); font-size: .85rem; }
+    /* ── SECTION PADDING ── */
+    .sec-pad { padding: 72px 0; }
+
+    /* ── FINAL CTA ── */
+    .final-cta { padding: 96px 0; text-align: center; }
+    .final-cta h2 { margin-bottom: 36px; }
+    .final-note { margin-top: 16px; font-size: .82rem; color: rgba(255,255,255,.4); }
     .final-note a { color: var(--purple); text-decoration: none; }
 
     /* ── Q-BAR ── */
     .q-bar {
-      background: var(--purple-soft);
-      border-top: 1px solid var(--purple-mid);
-      padding: 28px 0; text-align: center;
+      background: var(--mid); padding: 28px 0; text-align: center;
+      border-top: 1px solid rgba(255,255,255,.07);
     }
-    .q-bar p { font-size: 1rem; font-weight: 600; margin-bottom: 8px; color: var(--text); }
-    .q-bar a { color: var(--purple); text-decoration: none; font-weight: 700; font-size: .95rem; }
-    .q-bar a:hover { text-decoration: underline; }
+    .q-bar p { font-size: .97rem; font-weight: 600; margin-bottom: 8px; }
+    .q-bar a { color: var(--purple); text-decoration: none; font-weight: 700; }
 
     /* ── FOOTER ── */
-    footer { border-top: 1px solid var(--border); padding: 24px 0; }
+    footer { background: var(--dark); border-top: 1px solid rgba(255,255,255,.07); padding: 24px 0; }
     .footer-row {
-      max-width: 980px; margin: 0 auto; padding: 0 32px;
+      max-width: 980px; margin: 0 auto; padding: 0 24px;
       display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 8px; font-size: .78rem; color: var(--muted);
+      flex-wrap: wrap; gap: 8px; font-size: .75rem; color: rgba(255,255,255,.35);
     }
-    .footer-logo { font-family: 'Space Mono', monospace; font-weight: 700; font-size: .85rem; color: var(--text); }
+    .footer-logo { font-family: 'Space Mono', monospace; font-weight: 700; font-size: .82rem; color: var(--white); text-transform: uppercase; }
     .footer-logo em { font-style: normal; color: var(--purple); }
     footer a { color: var(--purple); text-decoration: none; }
 
     /* ── MOBILE ── */
     @media (max-width: 680px) {
-      .wrap { padding: 0 20px; }
-      .hero { padding: 52px 0 48px; }
-      .section { padding: 56px 0; }
-      .hero-stats { grid-template-columns: 1fr 1fr; }
-      .hero-stats .stat:nth-child(3) {
-        grid-column: 1/-1; border-right: none;
-        border-top: 1px solid var(--border);
-      }
-      .build-two { grid-template-columns: 1fr; gap: 36px; }
-      .whom-two { grid-template-columns: 1fr; gap: 36px; }
-      .speaker-grid { grid-template-columns: 1fr; gap: 28px; }
-      .speaker-photo { aspect-ratio: 3/4; max-height: 400px; }
-      .reviews-grid { grid-template-columns: 1fr; }
-      .prog-row { grid-template-columns: 52px 1fr; }
-      .prog-row.star { margin: 0 -20px; padding: 24px 20px; }
-      .prog-idx { font-size: 1.4rem; }
-      .scarcity-num { font-size: 3.2rem; }
-      .scarcity-block { padding: 20px; gap: 16px; }
-      .price-big { font-size: 4rem; }
-      .price-old { font-size: 1.6rem; }
-      .cta-row { flex-direction: column; align-items: flex-start; }
-      .final { padding: 64px 0; }
+      .hero { min-height: 100svh; }
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .stats-bar .stat:nth-child(3) { grid-column: 1/-1; border-right: none; border-top: 1px solid rgba(255,255,255,.1); }
+      .compare-grid { grid-template-columns: 1fr; }
+      .build-item { grid-template-columns: 60px 1fr; }
+      .whom-item { grid-template-columns: 60px 1fr; }
+      .review-grid { grid-template-columns: 1fr; }
+      .agents-row { grid-template-columns: 1fr; }
+      .speaker-hero { min-height: 50vh; }
+      .sec-pad { padding: 52px 0; }
+      .final-cta { padding: 64px 0; }
+      .prog-card-top { flex-direction: column; gap: 8px; }
+      .scarcity-num { font-size: 3.5rem; }
+      .price-current { font-size: 5rem; }
     }
   </style>
 </head>
@@ -476,219 +423,256 @@
 <nav>
   <div class="nav-row">
     <a class="logo" href="#">Rockit<em> Academy</em></a>
-    <button class="nav-btn" onclick="payWithWFP()">Зареєструватись</button>
+    <button class="nav-btn" onclick="payWithWFP()">Зареєструватись →</button>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="wrap">
+<section class="hero sec-dark">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
     <div class="hero-badge">
       <span class="hero-dot"></span>
-      Живий воркшоп · Zoom · 3 години
+      <span class="label-sm" style="color:rgba(255,255,255,.6)">Живий воркшоп · Zoom · 3 години</span>
     </div>
-    <h1>Поверни собі<br><em>10 годин на тиждень</em> —<br>нехай AI робить рутину</h1>
-    <p class="hero-sub">За один день ти побудуєш власного AI-помічника в Telegram, який шукає кандидатів, читає пошту і веде календар — поки ти займаєшся тим, що справді важливо.</p>
+    <h1 class="display display-xl">
+      Поверни собі<br>
+      <span class="accent">10 годин</span><br>
+      на тиждень
+    </h1>
+    <p class="hero-sub">За один воркшоп ти побудуєш власного AI-агента в Telegram, який шукає кандидатів, читає пошту і веде календар — без знання коду.</p>
     <div class="cta-row">
       <button class="cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
       <span class="cta-note">🔥 <strong>Early bird — 79 € замість 99 €</strong><br>Вже зареєструвались 22 людини</span>
     </div>
-    <div class="hero-stats">
+    <div class="stats-bar">
       <div class="stat">
-        <div class="stat-val">22</div>
-        <div class="stat-label">вже зареєструвались попередньо</div>
+        <span class="stat-val">22</span>
+        <span class="stat-label">вже зареєструвались попередньо</span>
       </div>
       <div class="stat">
-        <div class="stat-val">200+</div>
-        <div class="stat-label">HR і рекрутерів навчила Ірина</div>
+        <span class="stat-val">200+</span>
+        <span class="stat-label">HR і рекрутерів навчила Ірина</span>
       </div>
       <div class="stat">
-        <div class="stat-val">0</div>
-        <div class="stat-label">рядків коду від тебе</div>
+        <span class="stat-val">0</span>
+        <span class="stat-label">рядків коду від тебе</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PAIN -->
-<section class="section">
+<!-- PAIN COMPARISON -->
+<section class="sec-gray sec-pad">
   <div class="wrap">
-    <div class="sec-label">Чи знайомо тобі це?</div>
-    <h2>День HR, рекрутера<br>або сорсера сьогодні</h2>
-    <div class="pain-items">
-      <div class="pain-item"><span class="pain-n">07:58</span><span>Відкриваєш пошту — 47 непрочитаних. Три від кандидатів, яких уже взяли конкуренти.</span></div>
-      <div class="pain-item"><span class="pain-n">10:30</span><span>Другу годину скриниш CV. Ще 60 в черзі. Зустріч з hiring manager — через 30 хвилин.</span></div>
-      <div class="pain-item"><span class="pain-n">13:15</span><span>Колега питає: "А де той кандидат що ми розглядали місяць тому?" Шукаєш у трьох таблицях і двох чатах.</span></div>
-      <div class="pain-item"><span class="pain-n">18:40</span><span>Всі пішли. Ти ще тут — заповнюєш те, що не встигла вдень. Завтра буде так само.</span></div>
-      <div class="pain-item"><span class="pain-n">23:00</span><span>Читаєш про AI в LinkedIn. Думаєш: "Це не для мене, я цього не знаю." Закриваєш вкладку.</span></div>
+    <span class="label-sm" style="opacity:.5">Впізнаєш себе?</span>
+    <h2 class="display display-lg" style="margin-top:12px">
+      Тобі не треба<br>
+      працювати більше.<br>
+      Тобі треба <span class="accent">змінити підхід.</span>
+    </h2>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="compare-card now">
+          <span class="compare-label">Ти зараз</span>
+          <p class="compare-text">Відкриваєш пошту — 47 непрочитаних. Три від кандидатів, яких уже взяли конкуренти.</p>
+        </div>
+        <div class="compare-card now">
+          <span class="compare-label">Ти зараз</span>
+          <p class="compare-text">Другу годину скриниш CV. Ще 60 в черзі. Зустріч через 30 хвилин.</p>
+        </div>
+        <div class="compare-card now">
+          <span class="compare-label">Ти зараз</span>
+          <p class="compare-text">"Де той кандидат?" — шукаєш у трьох таблицях і двох чатах.</p>
+        </div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-card after">
+          <span class="compare-label">Після воркшопу</span>
+          <p class="compare-text">Агент зробив дайджест за ніч. Відкриваєш Telegram — 2 хвилини замість 40.</p>
+        </div>
+        <div class="compare-card after">
+          <span class="compare-label">Після воркшопу</span>
+          <p class="compare-text">Агент у фоні шукає кандидатів поки ти на зустрічі і пише результати в Sheets.</p>
+        </div>
+        <div class="compare-card after">
+          <span class="compare-label">Після воркшопу</span>
+          <p class="compare-text">Питаєш агента — він пам'ятає всіх. З нотатками, статусами і датами.</p>
+        </div>
+      </div>
     </div>
-    <p class="pain-pull">Ти не встигаєш не тому що повільна. А тому що робиш те, що давно має робити машина.</p>
-    <div class="mid-cta">
+    <div class="mid-cta gray-section">
       <button class="mid-cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
-      <span class="mid-cta-note">🔥 <strong>Early bird</strong> · Лишилось кілька місць</span>
+      <span class="mid-cta-note" style="color:#555">🔥 Early bird · Лишилось кілька місць</span>
     </div>
   </div>
 </section>
 
-<!-- SOLUTION -->
-<section class="section">
+<!-- WHAT WE BUILD -->
+<section class="sec-dark sec-pad">
   <div class="wrap">
-    <div class="sec-label">Як виглядає твій день після воркшопу</div>
-    <h2>Той самий день<br><em>з агентом.</em></h2>
-    <div class="sol-rows">
-      <div class="sol-row"><span class="sol-ico">☀️</span><span><strong>08:00.</strong> Відкриваєш Telegram — агент вже зробив дайджест важливих листів. 2 хвилини замість 40.</span></div>
-      <div class="sol-row"><span class="sol-ico">🔍</span><span><strong>На зустрічі.</strong> Агент у фоні шукає кандидатів за твоїм запитом і записує результати в Google Sheets.</span></div>
-      <div class="sol-row"><span class="sol-ico">📅</span><span><strong>Треба призначити інтерв'ю.</strong> Пишеш агенту — він перевіряє твій календар і пропонує слоти.</span></div>
-      <div class="sol-row"><span class="sol-ico">🧠</span><span><strong>"Де той кандидат?"</strong> Питаєш агента — він пам'ятає всіх. З нотатками, статусами, датами.</span></div>
-      <div class="sol-row"><span class="sol-ico">🌙</span><span><strong>18:00.</strong> Ти виходиш. Агент залишається і відповідає на запити поки ти відпочиваєш.</span></div>
+    <span class="label-sm" style="color:rgba(255,255,255,.4)">Що будуємо</span>
+    <h2 class="display display-lg" style="margin-top:12px">
+      Твій агент.<br>
+      <span class="accent">Не шаблон — твій.</span>
+    </h2>
+    <div class="build-items">
+      <div class="build-item">
+        <span class="bnum">[ 01 ]</span>
+        <div class="build-item-text"><strong>Пошук кандидатів</strong>Шукає в інтернеті за твоїм запитом і зберігає в Google Sheets</div>
+      </div>
+      <div class="build-item">
+        <span class="bnum">[ 02 ]</span>
+        <div class="build-item-text"><strong>Читає пошту</strong>Читає Gmail і дає короткий дайджест важливих листів</div>
+      </div>
+      <div class="build-item">
+        <span class="bnum">[ 03 ]</span>
+        <div class="build-item-text"><strong>Веде календар</strong>Перевіряє Google Calendar і пропонує слоти для інтерв'ю</div>
+      </div>
+      <div class="build-item">
+        <span class="bnum">[ 04 ]</span>
+        <div class="build-item-text"><strong>Пише в Telegram</strong>Надсилає повідомлення від твого імені</div>
+      </div>
+      <div class="build-item">
+        <span class="bnum">[ 05 ]</span>
+        <div class="build-item-text"><strong>Пам'ятає все</strong>Зберігає кожного кандидата, нотатки, статуси</div>
+      </div>
+      <div class="build-item">
+        <span class="bnum">[ 06 ]</span>
+        <div class="build-item-text"><strong>Розуміє голосові</strong>Транскрибує і виконує голосові запити</div>
+      </div>
+      <div class="build-item">
+        <span class="bnum">[ 07 ]</span>
+        <div class="build-item-text"><strong>Працює 24/7</strong>На сервері DigitalOcean — $6/міс, навіть коли ти спиш</div>
+      </div>
     </div>
-    <p class="sol-punch" style="margin-top:40px">Це не фантастика і не ChatGPT у браузері.<br><em>Це твій особистий агент, якого ти побудуєш сама за 3 години.</em></p>
-  </div>
-</section>
-
-<!-- BUILD -->
-<section class="section">
-  <div class="wrap">
-    <div class="sec-label">Що будуємо</div>
-    <h2>Твій агент.<br><em>Не шаблон — твій.</em></h2>
-    <div class="build-two">
-      <div class="build-col">
-        <span class="build-col-title">// Можливості агента</span>
-        <ul class="build-list">
-          <li class="build-li"><span class="build-ico">🔍</span><span>Шукає кандидатів за запитом</span></li>
-          <li class="build-li"><span class="build-ico">📋</span><span>Зберігає в Google Sheets</span></li>
-          <li class="build-li"><span class="build-ico">📅</span><span>Перевіряє Google Calendar</span></li>
-          <li class="build-li"><span class="build-ico">📩</span><span>Читає Gmail, дає дайджест</span></li>
-          <li class="build-li"><span class="build-ico">💬</span><span>Пише в Telegram від твого імені</span></li>
-          <li class="build-li"><span class="build-ico">🧠</span><span>Пам'ятає все що ти сказала</span></li>
-          <li class="build-li"><span class="build-ico">🎤</span><span>Розуміє голосові повідомлення</span></li>
-        </ul>
-      </div>
-      <div class="build-col">
-        <span class="build-col-title">// Стек</span>
-        <div class="stack-tags">
-          <span class="stack-tag">Claude AI</span>
-          <span class="stack-tag">VS Code</span>
-          <span class="stack-tag">Docker</span>
-          <span class="stack-tag">Telegram</span>
-          <span class="stack-tag">Google APIs</span>
-          <span class="stack-tag">DigitalOcean</span>
-        </div>
-        <div class="build-info">
-          🌐 <strong>Хочеш щоб агент працював 24/7?</strong><br>
-          Розберемо як запустити його на сервері DigitalOcean — $6/міс і він живе постійно, навіть коли ти спиш.
-        </div>
-        <div class="build-warn">
-          ⚠️ Ти не будеш копіювати чужого агента.<br>
-          Ти побудуєш свого — з власним характером, ім'ям і задачами.
-        </div>
-      </div>
+    <div style="margin-top:28px; padding:16px 20px; background:var(--card-dark); border-left:4px solid var(--purple); font-size:.9rem; color:rgba(255,255,255,.6); line-height:1.6">
+      Стек: <span style="color:var(--purple)">Claude AI · VS Code · Docker · Telegram · Google APIs · DigitalOcean</span>
     </div>
   </div>
 </section>
 
 <!-- PROGRAM -->
-<section class="section">
+<section class="sec-gray sec-pad">
   <div class="wrap">
-    <div class="sec-label">Програма</div>
-    <h2>3 години які змінять<br>як ти працюєш</h2>
-    <div class="prog-list">
-      <div class="prog-row">
-        <span class="prog-idx">01</span>
-        <div class="prog-content">
-          <div class="prog-title">Ти бачиш живого агента — і розумієш що це реально для тебе</div>
-          <ul class="prog-pts">
-            <li>Дивимось як мої агенти працюють прямо зараз — в реальному часі</li>
-            <li>Розбираємо чому "я цього не знаю" — це не перешкода, а міф</li>
-            <li>Ти розумієш що відбувається під капотом — без жодного рядка коду</li>
-          </ul>
+    <span class="label-sm" style="opacity:.5">Програма</span>
+    <h2 class="display display-lg" style="margin-top:12px">
+      3 години які змінять<br>
+      <span class="accent">як ти працюєш</span>
+    </h2>
+    <div class="prog-cards">
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <span class="bnum" style="color:var(--purple)">[ БЛОК 01 ]</span>
         </div>
+        <div class="prog-card-title" style="margin-bottom:16px">Ти бачиш живого агента і розумієш що це реально</div>
+        <ul class="prog-card-pts">
+          <li>Дивимось як мої агенти працюють прямо зараз — в реальному часі</li>
+          <li>Розбираємо чому "я цього не знаю" — це не перешкода, а міф</li>
+          <li>Ти розумієш архітектуру без жодного рядка коду</li>
+        </ul>
       </div>
-      <div class="prog-row">
-        <span class="prog-idx">02</span>
-        <div class="prog-content">
-          <div class="prog-title">Твоє середовище налаштоване і готове до роботи</div>
-          <ul class="prog-pts">
-            <li>Разом підключаємось до сервера — покроково, без паніки</li>
-            <li>Запускаємо Claude Code — твій головний інструмент на воркшопі</li>
-            <li>Ти вперше відкрила термінал — і нічого не зламала. Серйозно.</li>
-          </ul>
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <span class="bnum" style="color:var(--purple)">[ БЛОК 02 ]</span>
         </div>
+        <div class="prog-card-title" style="margin-bottom:16px">Твоє середовище готове до роботи</div>
+        <ul class="prog-card-pts">
+          <li>Разом підключаємось до сервера — покроково, без паніки</li>
+          <li>Запускаємо Claude Code — головний інструмент воркшопу</li>
+          <li>Ти вперше відкрила термінал — і нічого не зламала. Серйозно.</li>
+        </ul>
       </div>
-      <div class="prog-row star">
-        <span class="prog-idx">03</span>
-        <div class="prog-content">
-          <div class="prog-title">Твій агент запущений і вже відповідає тобі в Telegram <span class="prog-badge">⭐ головний блок</span></div>
-          <ul class="prog-pts">
-            <li>Описуєш агента своїми словами — Claude Code будує його за тебе</li>
-            <li>Даєш йому пам'ять, характер і інструменти — він стає живим</li>
-            <li>Перший живий запит у свій Telegram-бот. Це той момент, заради якого ти тут.</li>
-          </ul>
+      <div class="prog-card featured">
+        <div class="prog-card-top">
+          <span class="bnum" style="color:rgba(255,255,255,.7)">[ БЛОК 03 ]</span>
+          <span class="prog-star">⭐ Головний</span>
         </div>
+        <div class="prog-card-title" style="margin-bottom:16px">Твій агент запущений і вже відповідає в Telegram</div>
+        <ul class="prog-card-pts">
+          <li>Описуєш агента словами — Claude Code будує його за тебе</li>
+          <li>Даєш йому пам'ять, характер і інструменти — він стає живим</li>
+          <li>Перший живий запит у свій бот. Це той момент, заради якого ти тут.</li>
+        </ul>
       </div>
-      <div class="prog-row">
-        <span class="prog-idx">04</span>
-        <div class="prog-content">
-          <div class="prog-title">Агент знає твої задачі, твій стиль і твої інструменти</div>
-          <ul class="prog-pts">
-            <li>Підключаєш Google Calendar, Gmail, Sheets — під свій реальний кейс</li>
-            <li>Налаштовуєш під себе: він говорить твоєю мовою і вирішує твої задачі</li>
-            <li>Виходиш з воркшопу з агентом, якого зробила сама — не скопіювала</li>
-          </ul>
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <span class="bnum" style="color:var(--purple)">[ БЛОК 04 ]</span>
         </div>
+        <div class="prog-card-title" style="margin-bottom:16px">Агент знає твої задачі і твої інструменти</div>
+        <ul class="prog-card-pts">
+          <li>Підключаєш Google Calendar, Gmail, Sheets — під свій кейс</li>
+          <li>Налаштовуєш під себе: він говорить твоєю мовою</li>
+          <li>Виходиш з воркшопу з агентом якого зробила сама</li>
+        </ul>
       </div>
-      <div class="prog-row">
-        <span class="prog-idx">05</span>
-        <div class="prog-content">
-          <div class="prog-title">Ти знаєш що робити далі — і маєш спільноту поруч</div>
-          <ul class="prog-pts">
-            <li>Кожна показує свого агента — бачиш різні підходи і крадеш ідеї</li>
-            <li>Отримуєш чіткий roadmap: що розвивати після воркшопу і як</li>
-            <li>Залишаєшся в закритому чаті з учасниками та Іриною на 7 днів підтримки</li>
-          </ul>
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <span class="bnum" style="color:var(--purple)">[ БЛОК 05 ]</span>
         </div>
+        <div class="prog-card-title" style="margin-bottom:16px">Ти знаєш що робити далі і маєш спільноту поруч</div>
+        <ul class="prog-card-pts">
+          <li>Кожна показує свого агента — бачиш різні підходи і крадеш ідеї</li>
+          <li>Отримуєш roadmap: що розвивати після воркшопу і як</li>
+          <li>Закритий чат з учасниками та Іриною — 7 днів підтримки</li>
+        </ul>
       </div>
     </div>
-    <div class="mid-cta">
+    <div class="mid-cta gray-section">
       <button class="mid-cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
-      <span class="mid-cta-note">🔥 <strong>Early bird</strong> · Лишилось кілька місць</span>
+      <span class="mid-cta-note" style="color:#555">🔥 Early bird · Лишилось кілька місць</span>
     </div>
   </div>
 </section>
 
 <!-- FOR WHOM -->
-<section class="section">
+<section class="sec-dark sec-pad">
   <div class="wrap">
-    <div class="sec-label">Для кого</div>
-    <h2>Цей воркшоп для тебе,<br>якщо впізнаєш себе тут</h2>
-    <div class="whom-two">
-      <div class="whom-col">
-        <span class="whom-col-title">// Це для тебе</span>
-        <ul class="whom-list">
-          <li class="whom-li"><span>✅</span><span>Ти HR, рекрутер або сорсер — і тонеш у рутині щодня</span></li>
-          <li class="whom-li"><span>✅</span><span>Чула про AI, але не розумієш з чого почати без технічної освіти</span></li>
-          <li class="whom-li"><span>✅</span><span>Пробувала Zapier або Make — але хочеш щось своє, що справді працює</span></li>
-          <li class="whom-li"><span>✅</span><span>Готова вкласти один день щоб повернути собі десятки годин щотижня</span></li>
-          <li class="whom-li"><span>✅</span><span>Хочеш бути тим HR, який використовує AI — а не тим, кого він замінює</span></li>
-        </ul>
+    <span class="label-sm" style="color:rgba(255,255,255,.4)">Для кого</span>
+    <h2 class="display display-lg" style="margin-top:12px">
+      Цей воркшоп<br>
+      <span class="accent">ідеальний для тебе,</span><br>
+      якщо ти хочеш:
+    </h2>
+    <div class="whom-items" style="margin-bottom:16px">
+      <div class="whom-item">
+        <span class="bnum">[ 01 ]</span>
+        <p class="whom-text">Автоматизувати рутину — скринінг, пошта, календар — і нарешті займатись стратегією</p>
       </div>
-      <div class="whom-col">
-        <span class="whom-col-title">// Це не для тебе</span>
-        <ul class="whom-list">
-          <li class="whom-li"><span>❌</span><span>Ти вже маєш власних агентів і шукаєш advanced архітектуру</span></li>
-          <li class="whom-li"><span>❌</span><span>Ти розробник і хочеш технічний курс по API</span></li>
-        </ul>
+      <div class="whom-item">
+        <span class="bnum">[ 02 ]</span>
+        <p class="whom-text">Почати з AI не з ChatGPT у браузері, а з власним агентом який справді працює</p>
       </div>
+      <div class="whom-item">
+        <span class="bnum">[ 03 ]</span>
+        <p class="whom-text">Бути тим HR, який використовує AI — а не тим, кого він замінює</p>
+      </div>
+      <div class="whom-item">
+        <span class="bnum">[ 04 ]</span>
+        <p class="whom-text">Вкласти один день щоб повернути собі десятки годин щотижня</p>
+      </div>
+      <div class="whom-item">
+        <span class="bnum">[ 05 ]</span>
+        <p class="whom-text">Нарешті зробити своє, а не копіювати чужий шаблон</p>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,.04); padding:20px 24px; border-left:3px solid rgba(255,255,255,.15)">
+      <span class="label-sm" style="color:rgba(255,255,255,.3); display:block; margin-bottom:12px">Не для тебе якщо</span>
+      <p style="font-size:.9rem; color:rgba(255,255,255,.35); text-decoration:line-through">Ти вже маєш власних агентів і шукаєш advanced архітектуру</p>
+      <p style="font-size:.9rem; color:rgba(255,255,255,.35); text-decoration:line-through; margin-top:8px">Ти розробник і хочеш технічний курс по API</p>
     </div>
   </div>
 </section>
 
 <!-- REVIEWS -->
-<section class="section">
+<section class="sec-gray sec-pad">
   <div class="wrap">
-    <div class="sec-label">Відгуки</div>
-    <h2>Що кажуть після воркшопу</h2>
-    <div class="reviews-grid">
+    <span class="label-sm" style="opacity:.5">Відгуки</span>
+    <h2 class="display display-lg" style="margin-top:12px">
+      Що кажуть<br>
+      <span style="color:var(--purple)">після воркшопу</span>
+    </h2>
+    <div class="review-grid">
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"Чесно — йшла зі скептицизмом. Думала, знову буде 'просто ChatGPT'. А вийшла з агентом який наступного ранку вже розібрав мій inbox і дав короткий список пріоритетів. Це зовсім інше відчуття."</p>
@@ -702,68 +686,82 @@
         <div class="review-role">Senior Recruiter</div>
       </div>
     </div>
-    <div class="mid-cta">
+    <div class="mid-cta gray-section">
       <button class="mid-cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
-      <span class="mid-cta-note">🔥 <strong>Early bird</strong> · Лишилось кілька місць</span>
+      <span class="mid-cta-note" style="color:#555">🔥 Early bird · Лишилось кілька місць</span>
     </div>
   </div>
 </section>
 
 <!-- SPEAKER -->
-<section class="section">
-  <div class="wrap">
-    <div class="sec-label">Хто веде</div>
-    <h2>Ірина Субботіна</h2>
-    <div class="speaker-grid">
-      <img src="irina.png" alt="Ірина Субботіна" class="speaker-photo" />
-      <div class="speaker-right">
-        <div class="speaker-name">Ірина Субботіна</div>
-        <div class="speaker-pos">
-          Head of HR at Rockit Media<br>
-          Co-owner Rockit Talent · Owner Rockit Academy
-        </div>
-        <ul class="speaker-bio">
-          <li>10+ років в IT та digital-середовищі</li>
-          <li>7+ років у HR, рекрутингу та people management</li>
-          <li>Побудувала HR-процеси для IT, affiliate marketing та media buying команд</li>
-          <li>Авторка навчальних програм з рекрутингу, AI та HR</li>
-          <li>Навчила 200+ сорсерів і рекрутерів використовувати AI</li>
-          <li>Тестує нові AI-інструменти першою 🚀</li>
-        </ul>
-        <span class="agents-title">// Мої агенти що вже працюють</span>
-        <div class="agents-list">
-          <div class="agent-row"><span class="agent-ico">🤖</span><span><span class="agent-name">Люмус</span><span class="agent-desc">— HR-асистент в Telegram</span></span></div>
-          <div class="agent-row"><span class="agent-ico">👁</span><span><span class="agent-name">Аргус</span><span class="agent-desc">— слідкує за конкурентами</span></span></div>
-          <div class="agent-row"><span class="agent-ico">🌟</span><span><span class="agent-name">Сіріус</span><span class="agent-desc">— асистент з розширеною пам'яттю</span></span></div>
-        </div>
-        <p class="speaker-tg" style="margin-top:20px">Telegram: <a href="https://t.me/IrynaS_HR" target="_blank">@IrynaS_HR</a></p>
+<section class="sec-dark">
+  <div style="padding:48px 0 0">
+    <div class="wrap">
+      <span class="label-sm" style="color:rgba(255,255,255,.4)">Хто веде</span>
+    </div>
+  </div>
+  <div class="speaker-hero">
+    <div class="speaker-hero-bg"></div>
+    <div class="speaker-hero-name">
+      <div class="big-name">Субботіна</div>
+    </div>
+    <div class="speaker-content">
+      <h2 class="display display-md" style="margin-bottom:8px">Ірина Субботіна</h2>
+      <div class="speaker-pos">
+        Head of HR at Rockit Media · Co-owner Rockit Talent · Owner Rockit Academy
       </div>
+      <ul class="speaker-bio">
+        <li>10+ років в IT та digital-середовищі</li>
+        <li>7+ років у HR, рекрутингу та people management</li>
+        <li>Навчила 200+ сорсерів і рекрутерів використовувати AI</li>
+        <li>Авторка навчальних програм з рекрутингу, AI та HR</li>
+        <li>Тестує нові AI-інструменти першою 🚀</li>
+      </ul>
+      <div style="margin-top:24px">
+        <span class="label-sm" style="color:rgba(255,255,255,.35); display:block; margin-bottom:16px">// Мої агенти що вже працюють</span>
+        <div class="agents-row">
+          <div class="agent-card">
+            <div class="agent-name">🤖 Люмус</div>
+            <div class="agent-desc">HR-асистент в Telegram</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-name">👁 Аргус</div>
+            <div class="agent-desc">Слідкує за конкурентами</div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-name">🌟 Сіріус</div>
+            <div class="agent-desc">Асистент з розширеною пам'яттю</div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:20px; font-size:.85rem; color:rgba(255,255,255,.4)">Telegram: <a href="https://t.me/IrynaS_HR" target="_blank" style="color:var(--purple); text-decoration:none; font-weight:700">@IrynaS_HR</a></p>
     </div>
   </div>
 </section>
 
 <!-- PRICE -->
-<section class="section">
+<section class="sec-dark sec-pad">
   <div class="wrap">
-    <div class="sec-label">Ціна</div>
-    <h2>Група майже набрана.<br><em>Лишилось кілька місць.</em></h2>
+    <span class="label-sm" style="color:rgba(255,255,255,.4)">Ціна</span>
+    <h2 class="display display-lg" style="margin-top:12px; margin-bottom:40px">
+      Твоя свобода коштує<br>
+      <span class="accent">менше ніж один місяць рутини</span>
+    </h2>
     <div class="scarcity-block">
       <div class="scarcity-num">3</div>
       <div>
         <div class="scarcity-label">Лишилось 3 місця з 25</div>
-        <div class="scarcity-sub">Після заповнення ціна зростає до 99 €.</div>
+        <div class="scarcity-sub">Після заповнення ціна зростає до 99 €</div>
         <div class="scarcity-bar-wrap"><div class="scarcity-bar-fill"></div></div>
       </div>
     </div>
     <div class="price-roi">
-      💡 10 годин на тиждень × 4 тижні = <strong>40 годин щомісяця</strong> — повернуті тобі
+      💡 10 годин на тиждень × 4 тижні = <strong>40 годин щомісяця</strong> повернуті тобі
     </div>
-    <div class="price-hero">
-      <div class="price-big">79 €</div>
-      <div class="price-side">
-        <div class="price-old">99 €</div>
-        <div class="price-badge">🐦 Early bird — економиш 20 €</div>
-      </div>
+    <div class="price-block">
+      <span class="price-old">99 €</span>
+      <span class="price-current">79 €</span>
+      <div class="price-badge">🐦 Early bird — економиш 20 €</div>
     </div>
     <ul class="price-includes">
       <li class="price-inc"><span class="inc-chk">✓</span><span>3-годинний живий воркшоп в Zoom + запис</span></li>
@@ -779,10 +777,10 @@
 </section>
 
 <!-- FAQ -->
-<section class="section">
+<section class="sec-gray sec-pad">
   <div class="wrap">
-    <div class="sec-label">FAQ</div>
-    <h2>Часті запитання</h2>
+    <span class="label-sm" style="opacity:.5">FAQ</span>
+    <h2 class="display display-md" style="margin-top:12px; margin-bottom:0">Часті запитання</h2>
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q">Я ніколи не працювала з кодом. Чи впораюсь?<span class="faq-ico">+</span></button>
@@ -794,10 +792,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">Скільки коштує підтримка агента щомісяця?<span class="faq-ico">+</span></button>
-        <div class="faq-a">Залежить від того як хочеш запускати агента:<br><br>
-        <strong>Локально</strong> (агент працює поки відкритий ноутбук) — тільки Anthropic API ~$5–15/міс.<br><br>
-        <strong>24/7 на сервері</strong> — додається DigitalOcean Droplet $6/міс. Тоді агент працює постійно, навіть коли ти спиш. Разом ~$15–25/міс.<br><br>
-        На воркшопі розберемо обидва варіанти.</div>
+        <div class="faq-a"><strong>Локально</strong> (агент працює поки відкритий ноутбук) — тільки Anthropic API ~$5–15/міс.<br><br><strong>24/7 на сервері</strong> — додається DigitalOcean $6/міс. Разом ~$15–25/міс. Обидва варіанти розберемо на воркшопі.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Чи буде запис воркшопу?<span class="faq-ico">+</span></button>
@@ -816,11 +811,16 @@
 </section>
 
 <!-- FINAL CTA -->
-<section class="final">
+<section class="sec-dark final-cta">
   <div class="wrap">
-    <h2>Рутина не зникне сама.<br><em>Але ти можеш делегувати її за 3 години.</em></h2>
-    <button class="cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
-    <p class="final-note">Залишились питання? <a href="https://t.me/IrynaS_HR" target="_blank">Напиши в Telegram → @IrynaS_HR</a></p>
+    <h2 class="display display-lg">
+      Рутина не зникне сама.<br>
+      <span class="accent">Але ти можеш<br>делегувати її за 3 години.</span>
+    </h2>
+    <div style="margin-top:36px">
+      <button class="cta-btn" onclick="payWithWFP()">Хочу на воркшоп — 79 €</button>
+    </div>
+    <p class="final-note" style="margin-top:16px">Залишились питання? <a href="https://t.me/IrynaS_HR" target="_blank">Напиши в Telegram → @IrynaS_HR</a></p>
   </div>
 </section>
 
@@ -837,7 +837,7 @@
   </div>
 </footer>
 
-<!-- WayForPay hidden form -->
+<!-- WayForPay -->
 <form id="wfp-form" method="post" action="https://secure.wayforpay.com/pay" style="display:none">
   <input name="merchantAccount"    value="YOUR_MERCHANT_ACCOUNT" />
   <input name="merchantDomainName" value="aleksandrovnairina.github.io" />
@@ -858,7 +858,6 @@
     document.getElementById('wfp-date').value = Math.floor(Date.now() / 1000);
     document.getElementById('wfp-form').submit();
   }
-
   document.querySelectorAll('.faq-q').forEach(function(btn) {
     btn.addEventListener('click', function() {
       this.classList.toggle('open');
