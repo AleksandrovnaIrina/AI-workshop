@@ -13,11 +13,11 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:    #0c0c0c;
-      --lime:  #c6ff00;
-      --white: #f5f5f0;
-      --dim:   #888;
-      --rule:  rgba(255,255,255,.1);
+      --bg:    #ffffff;
+      --lime:  #7134E8;
+      --white: #0f0f0f;
+      --dim:   #666666;
+      --rule:  rgba(0,0,0,.1);
     }
 
     html { scroll-behavior: smooth; }
@@ -37,7 +37,7 @@
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 99;
-      background: rgba(12,12,12,.93);
+      background: rgba(255,255,255,.95);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--rule);
     }
@@ -215,7 +215,7 @@
       margin-top: 44px; padding: 22px 24px;
       border-left: 3px solid var(--lime);
       font-size: .97rem; font-weight: 600; color: var(--lime);
-      background: rgba(198,255,0,.04);
+      background: rgba(113,52,232,.04);
     }
 
     /* ── PROGRAM ── */
@@ -225,7 +225,7 @@
       gap: 0; border-top: 1px solid var(--rule); padding: 28px 0;
     }
     .prog-list .prog-row:last-child { border-bottom: 1px solid var(--rule); }
-    .prog-row.star { background: rgba(198,255,0,.03); }
+    .prog-row.star { background: rgba(113,52,232,.03); }
     .prog-idx {
       font-family: 'DM Serif Display', serif;
       font-size: 2.6rem; font-weight: 400;
@@ -313,16 +313,17 @@
     .reviews-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 52px; }
     .review-card {
       background: var(--bg); padding: 32px 28px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
     }
     .review-stars { color: var(--lime); letter-spacing: 3px; font-size: .85rem; margin-bottom: 14px; }
-    .review-text { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.05rem; line-height: 1.65; color: var(--white); margin-bottom: 18px; }
+    .review-text { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.05rem; line-height: 1.65; color: var(--white); margin-bottom: 18px; opacity: .85; }
     .review-author { font-size: .85rem; font-weight: 700; }
     .review-role { font-size: .78rem; color: var(--dim); margin-top: 2px; }
 
     /* ── PRICE ── */
     .price-roi {
       display: inline-flex; align-items: center; gap: 10px;
-      background: rgba(198,255,0,.07); border: 1px solid rgba(198,255,0,.2);
+      background: rgba(113,52,232,.07); border: 1px solid rgba(113,52,232,.2);
       border-radius: 6px; padding: 12px 18px; margin-bottom: 28px;
       font-size: .92rem; color: var(--dim);
     }
@@ -394,8 +395,8 @@
 
     /* ── Q-BAR ── */
     .q-bar {
-      background: rgba(198,255,0,.05);
-      border-top: 1px solid rgba(198,255,0,.15);
+      background: rgba(113,52,232,.05);
+      border-top: 1px solid rgba(113,52,232,.15);
       padding: 30px 0; text-align: center;
     }
     .q-bar p { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
@@ -450,8 +451,8 @@
     /* ── SCARCITY ── */
     .scarcity-block {
       display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
-      background: rgba(198,255,0,.05);
-      border: 1px solid rgba(198,255,0,.25);
+      background: rgba(113,52,232,.05);
+      border: 1px solid rgba(113,52,232,.25);
       border-radius: 8px; padding: 28px 32px; margin-bottom: 44px;
     }
     .scarcity-num {
@@ -901,8 +902,8 @@
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fillStyle = s.lime
-        ? 'rgba(198,255,0,' + alpha + ')'
-        : 'rgba(255,255,255,' + alpha + ')';
+        ? 'rgba(113,52,232,' + alpha + ')'
+        : 'rgba(100,80,160,' + (alpha * 0.3) + ')';
       ctx.fill();
       s.y -= s.speed;
       s.x += s.drift;
