@@ -65,7 +65,6 @@
     /* ── HERO ── */
     .hero {
       padding: 100px 0 80px;
-      border-bottom: 1px solid var(--rule);
     }
     .hero-meta {
       display: flex; align-items: center; gap: 10px;
@@ -123,7 +122,7 @@
     .n-label { font-size: .85rem; color: var(--dim); }
 
     /* ── SECTIONS ── */
-    .section { padding: 88px 0; border-bottom: 1px solid var(--rule); }
+    .section { padding: 88px 0; }
 
     .eyebrow {
       display: block;
@@ -321,6 +320,13 @@
     .review-role { font-size: .78rem; color: var(--dim); margin-top: 2px; }
 
     /* ── PRICE ── */
+    .price-roi {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(198,255,0,.07); border: 1px solid rgba(198,255,0,.2);
+      border-radius: 6px; padding: 12px 18px; margin-bottom: 28px;
+      font-size: .92rem; color: var(--dim);
+    }
+    .price-roi strong { color: var(--lime); }
     .price-wrap { margin-top: 52px; }
     .price-hero {
       display: flex; align-items: flex-end; gap: 24px;
@@ -493,10 +499,10 @@
     <h2>День HR, рекрутера<br>або сорсера сьогодні</h2>
     <div class="pain-items">
       <div class="pain-item"><span class="pain-n">07:58</span><span>Відкриваєш пошту — 47 непрочитаних. Три від кандидатів, яких уже взяли конкуренти.</span></div>
-      <div class="pain-item"><span class="pain-n">10:30</span><span>Другу годину скринуєш CV. Ще 60 в черзі. Зустріч з hiring manager — через 30 хвилин.</span></div>
+      <div class="pain-item"><span class="pain-n">10:30</span><span>Другу годину скриниш CV. Ще 60 в черзі. Зустріч з hiring manager — через 30 хвилин.</span></div>
       <div class="pain-item"><span class="pain-n">13:15</span><span>Колега питає: "А де той кандидат що ми розглядали місяць тому?" Шукаєш у трьох таблицях і двох чатах.</span></div>
       <div class="pain-item"><span class="pain-n">18:40</span><span>Всі пішли. Ти ще тут — заповнюєш те, що не встигла вдень. Завтра буде так само.</span></div>
-      <div class="pain-item"><span class="pain-n">23:00</span><span>Читаєш про AI в LinkedIn. Думаєш: "Це не для мене, я не технар." Закриваєш вкладку.</span></div>
+      <div class="pain-item"><span class="pain-n">23:00</span><span>Читаєш про AI в LinkedIn. Думаєш: "Це не для мене, я цього не знаю." Закриваєш вкладку.</span></div>
     </div>
     <p class="pain-pull">Ти не встигаєш не тому що повільна. А тому що робиш те, що давно має робити машина.</p>
   </div>
@@ -506,7 +512,7 @@
 <section class="section">
   <div class="wrap">
     <span class="eyebrow">Як виглядає твій день після воркшопу</span>
-    <h2>Той самий день —<br><em>інакше.</em></h2>
+    <h2>Той самий день<br><em>з агентом.</em></h2>
     <div class="sol-grid" style="margin-top:52px">
       <div class="sol-row"><span class="sol-ico">☀️</span><span><strong>08:00.</strong> Відкриваєш Telegram — агент вже зробив дайджест важливих листів. 2 хвилини замість 40.</span></div>
       <div class="sol-row"><span class="sol-ico">🔍</span><span><strong>На зустрічі.</strong> Агент у фоні шукає кандидатів за твоїм запитом і записує результати в Google Sheets.</span></div>
@@ -571,7 +577,7 @@
           <div class="prog-title">Ти бачиш живого агента — і розумієш що це реально для тебе</div>
           <ul class="prog-pts">
             <li>Дивимось як мої агенти працюють прямо зараз — в реальному часі</li>
-            <li>Розбираємо чому "я не технар" — це не перешкода, а міф</li>
+            <li>Розбираємо чому "я цього не знаю" — це не перешкода, а міф</li>
             <li>Ти розумієш що відбувається під капотом — без жодного рядка коду</li>
           </ul>
         </div>
@@ -651,6 +657,28 @@
   </div>
 </section>
 
+<!-- REVIEWS -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Відгуки</span>
+    <h2>Що кажуть після воркшопу</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Чесно — йшла зі скептицизмом. Думала, знову буде 'просто ChatGPT'. А вийшла з агентом який наступного ранку вже розібрав мій inbox і дав короткий список пріоритетів. Це зовсім інше відчуття."</p>
+        <div class="review-author">Олена К.</div>
+        <div class="review-role">HR Business Partner, IT-компанія</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ірина пояснює так, що ти не відчуваєш себе 'нетехнічною'. Ти просто описуєш що хочеш — і воно будується. Мій агент вже третій тиждень шукає кандидатів поки я на зустрічах."</p>
+        <div class="review-author">Марина Д.</div>
+        <div class="review-role">Senior Recruiter</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- SPEAKER -->
 <section class="section">
   <div class="wrap">
@@ -684,39 +712,20 @@
   </div>
 </section>
 
-<!-- REVIEWS -->
-<section class="section">
-  <div class="wrap">
-    <span class="eyebrow">Відгуки</span>
-    <h2>Що кажуть після воркшопу</h2>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">"Чесно — йшла зі скептицизмом. Думала, знову буде 'просто ChatGPT'. А вийшла з агентом який наступного ранку вже розібрав мій inbox і дав короткий список пріоритетів. Це зовсім інше відчуття."</p>
-        <div class="review-author">Олена К.</div>
-        <div class="review-role">HR Business Partner, IT-компанія</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">"Ірина пояснює так, що ти не відчуваєш себе 'нетехнічною'. Ти просто описуєш що хочеш — і воно будується. Мій агент вже третій тиждень шукає кандидатів поки я на зустрічах."</p>
-        <div class="review-author">Марина Д.</div>
-        <div class="review-role">Senior Recruiter</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- PRICE -->
 <section class="section">
   <div class="wrap">
     <span class="eyebrow">Ціна</span>
     <h2>Група майже набрана.<br><em>Лишилось кілька місць.</em></h2>
     <div class="price-wrap">
+      <div class="price-roi">
+        💡 10 годин на тиждень × 4 тижні = <strong>40 годин щомісяця</strong> — повернуті тобі
+      </div>
       <div class="price-hero">
         <div class="price-big">79 €</div>
         <div class="price-side">
           <div class="price-old">повна ціна 99 €</div>
-          <div class="price-badge">🐦 Early bird</div>
+          <div class="price-badge">🐦 Early bird — економиш 20 €</div>
         </div>
       </div>
       <ul class="price-includes">
